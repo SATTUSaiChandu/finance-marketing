@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent | Financement Facile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="agent.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="Application Logo.png" alt="Financement Facile Logo">
+    <nav>
+      <a href="#" class="active">Verify Borrower</a>
+      <a href="#">Verify Financier</a>
+      <a href="#">Log Out</a>
+    </nav>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    <section class="details">
+      <h2>Borrower 1 Details</h2>
+      <p><span class="highlight">Borrower Name:</span> XYZ</p>
+      <p><span class="highlight">Contact:</span> 98765432</p>
+      <p><span class="highlight">Loan Amount:</span> €200</p>
+      <p><span class="highlight">Suggested APR:</span> 12%</p>
+      <p><span class="highlight">Address:</span> rue 14 75013, Paris</p>
+      <p><span class="highlight">Term:</span> 1 month</p>
+      <p><span class="highlight">Repayment Schedule:</span> €190/month</p>
+      <p><span class="highlight">Loan Type:</span> Personal Loan</p>
+    </section>
+
+    <section class="profile">
+      <h2>Borrower Profile</h2>
+      <p><span class="highlight">Occupation:</span> Small Business Owner</p>
+      <p><span class="highlight">Verification Status:</span> Verified <span class="verified-badge">✔</span></p>
+      <p><span class="highlight">Income Proof:</span> <a href="#" class="view-link">View Document</a></p>
+      <p><span class="highlight">Bank Statement:</span> <a href="#" class="view-link">View Document</a></p>
+    </section>
+
+    <div class="btn-section">
+      <button id="verifyBtn" class="btn btn-verify">✅ Verified</button>
+      <button id="rejectBtn" class="btn btn-reject">❌ Reject</button>
+    </div>
+  </div>
+
+  <!-- Verification Modal -->
+  <div id="verifyModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirm Verification</h3>
+      <p>Are you sure you want to verify this borrower?</p>
+      <div class="modal-actions">
+        <button class="btn btn-verify" id="confirmVerify">Yes, Verify</button>
+        <button class="btn btn-reject" id="cancelVerify">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rejection Modal -->
+  <div id="rejectModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirm Rejection</h3>
+      <p>Are you sure you want to reject this borrower?</p>
+      <div class="modal-actions">
+        <button class="btn btn-reject" id="confirmReject">Yes, Reject</button>
+        <button class="btn btn-verify" id="cancelReject">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © Powered By <span class="footer">Novuerly</span>
+  </footer>
+
+  <!-- JavaScript File -->
+  <script src="agent.js"></script>
+
+</body>
+</html>

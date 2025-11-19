@@ -1,0 +1,139 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    margin: 0;
+    text-align: center;
+}
+
+.page-title {
+    margin: 20px 0;
+    font-size: 28px;
+}
+
+.browser-frame {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fafafa;
+    padding-bottom: 10px;
+}
+
+.address-bar {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.url {
+    color: #555;
+}
+
+.nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo {
+    height: 50px;
+}
+
+.nav-buttons button {
+    margin: 0 5px;
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    background-color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tabs {
+    margin: 15px 0;
+}
+
+.tab {
+    padding: 10px 25px;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f5f5f5;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.search-box input {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.export-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.data-table {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.data-table th {
+    background-color: #f2f2f2;
+}
+
+.view, .suspend, .activate {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.view { background-color: #007bff; }
+.suspend { background-color: #ff4d4d; }
+.activate { background-color: #28a745; }
+
+footer {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
