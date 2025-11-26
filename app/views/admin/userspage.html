@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Users</title>
+
+    <!-- Users page CSS -->
+    <link rel="stylesheet" href="../../assets/css/userspage.css">
+</head>
+
+<body>
+
+    <h1 class="page-title">Admin</h1>
+
+    <div class="browser-frame">
+
+        <!-- ADDRESS BAR -->
+        <div class="address-bar">
+            <span class="url">www.financementfacile.com/admin-users</span>
+        </div>
+
+        <!-- HEADER -->
+        <div class="nav-bar">
+            <img src="../../assets/images/Application Logo.png" alt="Logo" class="logo">
+
+            <div class="nav-buttons">
+                <a href="userspage.html"><button class="active-btn">Users</button></a>
+                <a href="subscriptionpage.html"><button>Subscriptions</button></a>
+                <a href="termspage.html"><button>T&amp;C</button></a>
+                <a href="logoutpage.html"><button>Log Out</button></a>
+            </div>
+        </div>
+
+        <!-- TABS (same tabs for consistency, but no active here) -->
+        <div class="tabs">
+            <a href="financierpage.html"><button class="tab">Financier</button></a>
+            <a href="borrowerpage.html"><button class="tab">Borrower</button></a>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" placeholder="Search Name / Email">
+            </div>
+
+            <select>
+                <option>Status</option>
+                <option>Active</option>
+                <option>Pending</option>
+                <option>Suspended</option>
+            </select>
+
+            <button class="export-btn">Export CSV</button>
+        </div>
+
+        <!-- USERS TABLE -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>U01</td>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td>Financier</td>
+                    <td>Active</td>
+                    <td>
+                        <button class="view">View</button>
+                        <button class="suspend">Suspend</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>U02</td>
+                    <td>Maria Silva</td>
+                    <td>maria@example.com</td>
+                    <td>Borrower</td>
+                    <td>Pending</td>
+                    <td>
+                        <button class="view">View</button>
+                        <button class="suspend">Suspend</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>U03</td>
+                    <td>David Park</td>
+                    <td>david@example.com</td>
+                    <td>Financier</td>
+                    <td>Suspended</td>
+                    <td>
+                        <button class="view">View</button>
+                        <button class="activate">Activate</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <footer>
+        <p>@Powered By Nouverely</p>
+    </footer>
+
+</body>
+</html>

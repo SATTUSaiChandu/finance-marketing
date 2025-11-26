@@ -1,0 +1,113 @@
+/* GLOBAL RESET */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TITLE */
+.page-title {
+    margin: 25px 0;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* MAIN PAGE CONTAINER */
+.browser-frame {
+    width: 95%;
+    max-width: 1400px;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    padding-bottom: 30px;
+}
+
+/* ADDRESS BAR */
+.address-bar {
+    background: #f5f5f5;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+.url {
+    color: #555;
+    font-size: 14px;
+}
+
+/* HEADER NAVIGATION */
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    height: 55px;
+}
+
+/* TOP NAV BUTTONS */
+.nav-buttons button {
+    margin: 0 5px;
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.nav-buttons button:hover {
+    background: #eaeaea;
+}
+
+/* TABS SECTION */
+.tabs {
+    margin: 20px 0 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0;
+}
+
+.tab {
+    padding: 12px 30px;
+    border: 1px solid #ccc;
+    background: #f6f6f6;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px 6px 0 0;
+    margin-right: 5px;
+    transition: 0.2s;
+}
+
+.tab.active {
+    background: #007bff;
+    color: white;
+    border-bottom: none;
+}
+
+.nav-buttons.active {
+    background: #007bff;
+    color: white;
+    border-bottom: none;
+}
+
+/* CONTENT PLACEHOLDER (DEFAULT WHEN NO TABLE) */
+.content-placeholder {
+    margin-top: 40px;
+    font-size: 18px;
+    color: #777;
+}
+
+/* FOOTER */
+footer {
+    margin-top: auto;
+    padding: 15px;
+    font-size: 14px;
+    color: #555;
+}

@@ -1,0 +1,166 @@
+/* GENERAL ADMIN LAYOUT STYLES */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* PAGE TITLE */
+.page-title {
+    margin: 25px 0;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* MAIN FRAME */
+.browser-frame {
+    width: 95%;
+    max-width: 1400px;
+    margin: auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding-bottom: 30px;
+}
+
+/* ADDRESS BAR */
+.address-bar {
+    background: #f0f0f0;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+.url {
+    color: #555;
+}
+
+/* TOP NAVIGATION */
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 40px;
+    border-bottom: 1px solid #eee;
+}
+.logo {
+    height: 55px;
+}
+
+.nav-buttons button {
+    margin: 0 5px;
+    padding: 10px 18px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.nav-buttons button:hover {
+    background: #eee;
+}
+.active-btn {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* TABS */
+.tabs {
+    margin: 20px 0 10px;
+    border-bottom: 1px solid #ccc;
+}
+.tab {
+    padding: 12px 30px;
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px 6px 0 0;
+    margin-right: 5px;
+}
+
+/* FILTERS */
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.search-box input {
+    padding: 10px;
+    width: 220px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.export-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.export-btn:hover {
+    opacity: 0.85;
+}
+
+/* TABLE */
+.data-table {
+    width: 92%;
+    margin: 20px auto 0;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}
+
+.data-table th {
+    background: #f2f2f2;
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 2px solid #ddd;
+}
+
+.data-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* ACTION BUTTONS */
+.view, .suspend, .activate {
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.view { background: #007bff; }
+.suspend { background: #ff4d4d; }
+.activate { background: #28a745; }
+
+.view:hover, .suspend:hover, .activate:hover {
+    opacity: 0.8;
+}
+
+/* FOOTER */
+footer {
+    margin-top: auto;
+    padding: 15px;
+    font-size: 14px;
+    color: #555;
+}

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Financier</title>
+
+    <!-- Financier styles -->
+    <link rel="stylesheet" href="../../assets/css/financierpage.css">
+</head>
+
+<body>
+    <h1 class="page-title">Admin</h1>
+
+    <div class="browser-frame">
+        
+        <!-- ADDRESS BAR -->
+        <div class="address-bar">
+            <span class="url">www.financementfacile.com/admin-users</span>
+        </div>
+
+        <!-- HEADER / NAVIGATION -->
+        <div class="nav-bar">
+            <!-- adjust this path if your logo moved under assets/images -->
+            <img src="../agent/Application Logo.png" alt="Logo" class="logo">
+
+            <div class="nav-buttons">
+                <a href="userspage.html"><button>Users</button></a>
+                <a href="subscriptionpage.html"><button>Subscriptions</button></a>
+                <a href="termspage.html"><button>T&amp;C</button></a>
+                <a href="logoutpage.html"><button>Log Out</button></a>
+            </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+            <!-- This page = Financier active -->
+            <button class="tab active">Financier</button>
+            <a href="borrowerpage.html"><button class="tab">Borrower</button></a>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" placeholder="Enter Mail/Name">
+            </div>
+
+            <select>
+                <option>Pending/Active/Suspended</option>
+            </select>
+
+            <select>
+                <option>Free/Pro/Pro+</option>
+            </select>
+
+            <button class="export-btn">Export CSV</button>
+        </div>
+
+        <!-- TABLE - FINANCIER DATA -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Plan</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>F1</td>
+                    <td>xyz</td>
+                    <td>xyz@e.com</td>
+                    <td>Active</td>
+                    <td>Pro</td>
+                    <td>
+                        <button class="view">View</button>
+                        <button class="suspend">Suspend</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>F2</td>
+                    <td>abc</td>
+                    <td>xyz@e.com</td>
+                    <td>Pending</td>
+                    <td>Free</td>
+                    <td>
+                        <button class="view">View</button>
+                        <button class="suspend">Suspend</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>F3</td>
+                    <td>fds</td>
+                    <td>xyz@e.com</td>
+                    <td>Suspended</td>
+                    <td>Free</td>
+                    <td>
+                        <button class="view">View</button>
+                        <button class="activate">Activate</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>@Powered By Nouverely</p>
+    </footer>
+</body>
+</html>
