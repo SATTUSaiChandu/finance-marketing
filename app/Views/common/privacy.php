@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Privacy Policy</title>
+
+
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      color: #0f172a;
+      background: #f8fafc;
+      -webkit-font-smoothing: auto;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+
+      z-index: -1;
+      pointer-events: none;
+
+      background-image: url("/finance-marketing/public/assets/images/Application%20Logo.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 120% auto;
+
+      filter: blur(10px) saturate(.9) opacity(.18);
+      transform: scale(1.03);
+    }
+
+    /* optionally add a dark/soft tint overlay to improve foreground contrast */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: rgba(15, 23, 42, 0.06);
+      /* adjust color & alpha to taste */
+    }
+
+
+    /* ROOT VARIABLES */
+    :root {
+      --max-width: 1100px;
+      --page-gap: 16px;
+      --accent: #2563eb;
+      --muted: #667085;
+    }
+
+    /* CONTAINER */
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--page-gap);
+    }
+
+    /* =========================================================
+   NAVBAR
+========================================================= */
+    .nav {
+      background: #fff;
+      border-bottom: 1px solid rgba(230, 238, 249, 1);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+
+    }
+
+    .brand {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+    }
+
+
+
+    .logo img {
+      width: 200px;
+      height: auto;
+
+      object-fit: cover;
+    }
+
+    /* NAV ACTION BUTTONS */
+    .nav-actions a {
+      margin-left: 8px;
+      text-decoration: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 9999px;
+      border: 1px solid rgba(230, 238, 249, 1);
+      background: #fff;
+      color: #0f172a;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.16s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    /* =========================================================
+   HERO SECTION
+========================================================= */
+    .hero {
+      background: transparent !important;
+      padding: 72px 0 48px;
+    }
+
+    .hero-inner {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .hero-content {
+      flex: 1 1 520px;
+      min-width: 260px;
+      max-width: 640px;
+    }
+
+    .hero-mockup {
+      flex: 0 1 420px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 260px;
+    }
+
+    .hero-mockup img {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 14px;
+      box-shadow: 0 24px 80px rgba(15, 23, 42, 0.06);
+    }
+
+    .hero-top-title {
+      font-size: clamp(28px, 6vw, 56px);
+      line-height: 1.03;
+      font-weight: 800;
+      margin: 0 0 6px;
+      color: #0f172a;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(14px, 3.2vw, 28px);
+      color: #334155;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: clamp(14px, 2.6vw, 18px);
+      margin: 8px 0 20px;
+      max-width: 760px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .hero-ctas .btn {
+      padding: 12px 26px;
+      border-radius: 12px;
+      font-size: 16px;
+    }
+
+    /* Trust badges */
+    .trust-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    .trust-item {
+      background: #eef6ff;
+      border: 1px solid #dbeeff;
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 9px;
+      font-size: 13px;
+    }
+
+    /* =========================================================
+   FEATURES SECTION
+========================================================= */
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 26px 32px;
+      margin-top: 42px;
+      align-items: start;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 26px 20px;
+      text-align: center;
+      border: 1px solid #e6eef9;
+      box-shadow: 0 8px 30px rgba(15, 23, 42, 0.04);
+      width: 320px;
+    }
+
+    .card .icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #eaf3ff;
+      color: #1d4ed8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 28px;
+    }
+
+    .card h3 {
+      margin: 8px 0 8px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* Center 3rd card under first two */
+    .features>.card:nth-child(3) {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: 340px;
+    }
+
+    /* =========================================================
+   SECTION TITLES
+========================================================= */
+    .section-title {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      margin: 48px 0 18px;
+      color: #0f172a;
+    }
+
+    /* =========================================================
+   HOW IT WORKS — Premium style (as requested)
+========================================================= */
+    .how-columns {
+      display: flex;
+      gap: 48px;
+      justify-content: center;
+      align-items: flex-start;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .how-block {
+      flex: 0 1 420px;
+      max-width: 480px;
+      background: transparent;
+      padding: 6px 4px;
+    }
+
+    .how-block h3 {
+      margin: 0 0 18px;
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .how-block.borrowers h3 {
+      color: #1678ff;
+    }
+
+    .how-block.financiers h3 {
+      color: #0fb07a;
+    }
+
+    .how-block ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .how-block li {
+      position: relative;
+      padding-left: 72px;
+      margin-bottom: 20px;
+      color: #475569;
+      font-size: 18px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    /* Background circle */
+    .how-block li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: #eef6ff;
+      border: 2px solid rgba(37, 99, 235, 0.14);
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    /* Checkmark */
+    .how-block li::after {
+      content: "✔";
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 22px;
+      font-weight: 800;
+      color: #1678ff;
+    }
+
+    .how-block.financiers li::before {
+      background: #ecfbf4;
+      border-color: rgba(16, 185, 129, 0.12);
+    }
+
+    .how-block.financiers li::after {
+      color: #0fb07a;
+    }
+
+    /* =========================================================
+   PLANS
+========================================================= */
+    .plans-grid {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .card-plan {
+      background: #fff;
+      border-radius: 12px;
+      padding: 22px;
+      width: 300px;
+      border: 1px solid #e6eef9;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      text-align: center;
+    }
+
+    .card-plan.featured {
+      transform: translateY(-6px);
+      border: 1px solid rgba(37, 99, 235, 0.12);
+      box-shadow: 0 20px 50px rgba(37, 99, 235, 0.06);
+    }
+
+    .plan-tag {
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .plan-price {
+      font-size: 22px;
+      margin: 8px 0 6px;
+    }
+
+    .plan-sub {
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .plan-features {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 14px;
+      color: #495569;
+      text-align: left;
+    }
+
+    .plan-features li {
+      margin: 6px 0;
+    }
+
+    /* =========================================================
+   CTA BOX
+========================================================= */
+    .cta {
+      background: #f0f7ff;
+      border: 1px solid #dbeefc;
+      padding: 34px;
+      border-radius: 14px;
+      text-align: center;
+      margin: 36px auto;
+      width: calc(100% - 160px);
+      max-width: 960px;
+      box-shadow: 0 10px 36px rgba(15, 23, 42, 0.04);
+    }
+
+    .cta h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .cta p {
+      margin: 0 0 18px;
+      color: var(--muted);
+    }
+
+    /* =========================================================
+   FOOTER — Heavy professional footer
+========================================================= */
+    .footer {
+      background: #0f172a;
+      color: #e6eef9;
+      padding: 36px 0 18px;
+      margin-top: 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 160px 160px 320px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .footer-logo {
+      width: 92px;
+      height: auto;
+      margin-bottom: 12px;
+    }
+
+    .footer-desc {
+      color: #cbd5e1;
+      max-width: 280px;
+      margin-bottom: 12px;
+    }
+
+    .socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .social-link {
+      color: #e6eef9;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .footer-links h4,
+    .footer-products h4,
+    .footer-contact h4 {
+      color: #fff;
+      margin: 0 0 10px;
+      font-size: 15px;
+    }
+
+    .footer-links ul,
+    .footer-products ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .footer-links a,
+    .footer-products a {
+      color: #cbd5e1;
+      display: block;
+      margin: 8px 0;
+      text-decoration: none;
+    }
+
+    .footer-contact address {
+      color: #cbd5e1;
+      font-style: normal;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .newsletter {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .newsletter input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.02);
+      color: #fff;
+      outline: none;
+    }
+
+    .newsletter input::placeholder {
+      color: #cbd5e1;
+    }
+
+    .newsletter .btn {
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: center;
+      margin-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 14px;
+      color: #b6c3d6;
+      font-size: 14px;
+    }
+
+    .small-links a {
+      color: #b6c3d6;
+      margin-left: 12px;
+      text-decoration: none;
+    }
+
+    /* HIDDEN ACCESSIBILITY TEXT */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      clip: rect(0, 0, 0, 0);
+      overflow: hidden;
+    }
+
+    /* =========================================================
+   RESPONSIVENESS
+========================================================= */
+
+
+    @media (max-width: 700px) {
+      body::before {
+        background-size: 160% auto;
+        filter: blur(8px) saturate(.95) opacity(.12);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .container {
+        padding: 14px;
+      }
+
+      .hero-inner {
+        gap: 22px;
+      }
+
+      .features {
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+      }
+
+      .features>.card:nth-child(3) {
+        grid-column: 1 / -1;
+        max-width: 420px;
+        width: 100%;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+
+      .footer-contact {
+        order: 3;
+      }
+
+      .plan-price {
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        padding: 36px 16px;
+        text-align: left;
+      }
+
+      .hero-top-title {
+        font-size: clamp(22px, 7vw, 36px);
+      }
+
+      .hero-mockup {
+        display: none;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .card {
+        max-width: 640px;
+        width: 100%;
+      }
+
+      .plans-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .newsletter {
+        flex-direction: column;
+      }
+
+      /* How it works mobile adjustments */
+      .how-columns {
+        display: block;
+      }
+
+      .how-block {
+        max-width: 100%;
+        padding: 12px 0;
+      }
+
+      .how-block h3 {
+        font-size: 22px;
+      }
+
+      .how-block li {
+        padding-left: 64px;
+        font-size: 16px;
+      }
+
+      .how-block li::before {
+        width: 48px;
+        height: 48px;
+      }
+
+      .how-block li::after {
+        left: 12px;
+        font-size: 18px;
+      }
+    }
+
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* SUBTLE ICON FLOAT ANIMATION */
+    .icon {
+      animation: icon-float 4s ease-in-out infinite;
+    }
+
+    @keyframes icon-float {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-6px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+  <main>
+    <article
+      class="policy-card"
+      role="article"
+      aria-labelledby="policy-title">
+      <div class="brand">
+        <a href="../Dashboard/index.php"><img src="/finance-marketing/public/assets/images/Application Logo.png" alt="App Logo" /></a>
+      </div>
+
+      <h1 id="policy-title">Privacy Policy</h1>
+      <div class="divider" aria-hidden="true"></div>
+
+      <p class="lead">
+        We respect your privacy and are committed to protecting your personal
+        data. This policy explains how we collect, use, disclose, and
+        safeguard your information when you use our services.
+      </p>
+
+      <h2 class="section-title">1. Information We Collect</h2>
+      <p>
+        We collect information you provide directly and information collected
+        automatically:
+      </p>
+      <ul>
+        <li>
+          <strong>Account data:</strong> name, username, email, password, DOB
+          (if provided).
+        </li>
+        <li>
+          <strong>Authentication data:</strong> PINs and security details used
+          for account recovery.
+        </li>
+        <li>
+          <strong>Usage data:</strong> actions within the app, preferences,
+          logs and device information.
+        </li>
+      </ul>
+
+      <h2 class="section-title">2. How We Use Your Information</h2>
+      <p>We use collected data to:</p>
+      <ul>
+        <li>Provide, maintain, and improve our services.</li>
+        <li>Authenticate and secure your account.</li>
+        <li>Personalize your experience and send relevant notices.</li>
+        <li>Detect, prevent and respond to fraud or security incidents.</li>
+      </ul>
+
+      <h2 class="section-title">3. Sharing & Third Parties</h2>
+      <p>
+        We do not sell your personal information. We may share information
+        with trusted service providers who perform services on our behalf
+        (hosting, analytics, payment processing) under strict contracts that
+        require confidentiality.
+      </p>
+
+      <h2 class="section-title">4. Cookies & Tracking</h2>
+      <p>
+        We use cookies and similar technologies to recognize devices, gather
+        analytics and improve our services. You can control cookies via your
+        browser settings but disabling some cookies may affect functionality.
+      </p>
+
+      <h2 class="section-title">5. Security</h2>
+      <p>
+        We implement industry-standard measures to protect data. However, no
+        method of transmission or storage is 100% secure. Please help us keep
+        your account safe by using strong passwords and not sharing
+        credentials.
+      </p>
+
+      <h2 class="section-title">6. Your Rights</h2>
+      <p>
+        Depending on where you live, you may have rights to access, correct,
+        or delete your personal data. Contact our support team to request
+        changes or exercise your rights.
+      </p>
+
+      <h2 class="section-title">7. Children's Privacy</h2>
+      <p>
+        Our services are not intended for children under the age of 13. We do
+        not knowingly collect personal information from children. If we learn
+        we have collected such data, we will take steps to delete it.
+      </p>
+
+      <h2 class="section-title">8. Changes to this Policy</h2>
+      <p>
+        We may update this policy occasionally. We will notify users of
+        significant changes via the app or email. Continued use after changes
+        implies acceptance of the updated policy.
+      </p>
+
+      <div class="group-sep" aria-hidden="true"></div>
+
+      <p class="note">
+        If you have questions about this policy or want to exercise your
+        rights, contact: <strong>support@example.com</strong>
+      </p>
+
+      <div class="actions">
+        <a class="btn" href="../Auth/signin.php">Back to Sign In</a>
+        <a class="btn ghost" href="../common/terms.php">View Terms & Conditions</a>
+      </div>
+
+
+    </article>
+  </main>
+
+  <?php include __DIR__ . '/footer.php'; ?>
+
+  <script>
+    document.getElementById("policy-year").textContent =
+      new Date().getFullYear();
+    document.getElementById("copy-year").textContent =
+      new Date().getFullYear();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+/* =========================================
+   HEADER + ACCOUNT DROPDOWN
+   ========================================= */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: rgba(246,247,250,0.95);
+    backdrop-filter: blur(6px);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(15,23,36,0.04);
+    z-index: 50;
+}
+
+.title-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.title-left h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.role-pill {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #ffd88a;
+    color: #7b4100;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ACCOUNT SECTION */
+.account-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+.acct-checkbox {
+    display: none;
+}
+
+.acct-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.acct-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+.acct-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.caret {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* DROPDOWN MENU */
+.acct-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    width: 230px;
+    background: #fff;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #eceef3;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: 0.2s ease;
+}
+
+.acct-checkbox:checked + .acct-toggle + .acct-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.acct-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.acct-menu a {
+    display: block;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #6b21a8;
+    font-weight: 600;
+}
+
+.acct-menu a:hover {
+    background: #f7f2ff;
+}
+
+.menu-logout a {
+    color: #ef4444 !important;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+    .acct-info { display: none; }
+}
