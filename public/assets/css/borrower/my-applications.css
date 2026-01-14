@@ -1,0 +1,95 @@
+/* ============================================================
+   BORROWER — MY APPLICATIONS
+   ============================================================ */
+  /* Section */
+  .section-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 10px 40px rgba(15,23,42,0.06);
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .section-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .search-input,
+  select {
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table th {
+    text-align: left;
+    padding: 12px 10px;
+    font-size: 13px;
+    color: #64748b;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .data-table td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+  }
+  
+  .muted {
+    font-size: 13px;
+    color: #64748b;
+  }
+  
+  /* Badges */
+  .badge {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .badge-green {
+    background: #ecfdf5;
+    color: #047857;
+  }
+  
+  .badge-amber {
+    background: #fff7ed;
+    color: #b45309;
+  }
+  
+
+  /* Actions */
+  .link-view {
+    color: b91c1c;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  
+  .link-view:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1000px) {
+    .kpi-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
