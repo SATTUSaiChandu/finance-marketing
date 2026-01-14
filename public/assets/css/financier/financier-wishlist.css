@@ -1,0 +1,170 @@
+/* ============================================================
+   FINANCIER — WISHLIST PAGE
+   ============================================================ */
+
+   .page-header {
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 22px;
+    box-shadow: 0 8px 30px rgba(16,24,40,0.05);
+  }
+  
+  .page-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+  }
+  
+  .page-header p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #64748b;
+  }
+  
+  /* Section */
+  .section-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 8px 30px rgba(16,24,40,0.05);
+    margin-top: 16px;
+  }
+  
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table th {
+    text-align: left;
+    font-size: 12px;
+    color: #64748b;
+    text-transform: uppercase;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .data-table td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 15px;
+  }
+  
+  .data-table tr:hover {
+    background: #f8fafc;
+  }
+  
+  .sub {
+    font-size: 13px;
+    color: #64748b;
+  }
+  
+  /* Credit score */
+  .score {
+    font-weight: 700;
+  }
+  .score.excellent { color: #16a34a; }
+  .score.good { color: #22c55e; }
+  .score.average { color: #f59e0b; }
+  
+  /* Badges */
+  .badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  
+  .badge-green {
+    background: #ecfdf5;
+    color: #047857;
+  }
+  
+  .badge-amber {
+    background: #fff7ed;
+    color: #b45309;
+  }
+  
+  /* Actions */
+  .actions-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .btn-view {
+    background: #2563eb;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  .btn-view:hover {
+    background: #1e4fd1;
+  }
+  
+  .btn-remove {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .btn-remove:hover {
+    background: #fee2e2;
+    border-color: #fecaca;
+    color: #b91c1c;
+  }
+  
+  /* Footer */
+  .table-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+  }
+  
+  .btn-load-more {
+    padding: 10px 18px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    color: #0f172a;
+  }
+  
+  .btn-load-more:hover {
+    background: #f8fafc;
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .data-table thead {
+      display: none;
+    }
+  
+    .data-table,
+    .data-table tbody,
+    .data-table tr,
+    .data-table td {
+      display: block;
+      width: 100%;
+    }
+  
+    .data-table tr {
+      padding: 12px 0;
+    }
+  
+    .data-table td {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 10px;
+    }
+  }
+  
