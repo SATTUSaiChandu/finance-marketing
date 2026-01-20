@@ -1,28 +1,31 @@
 <?php
+// ================= PAGE META =================
 $pageTitle    = "Profile";
 $pageSubtitle = "Settings";
 
-$userName  = "Financier";
-$userEmail = "Financier@finance.com";
+$userName  = $user['first_name'];
+$userEmail = $user['email'];
+$base      = '/finance-marketing/public';
+$role      = 'borrower';
 
+// Sidebar (Financier)
 $sidebarLinks = [
-  ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/finance-marketing/app/Views/financier/index.php'],
+  ['key' => 'dashboard',    'label' => 'Dashboard',    'icon' => '📊', 'href' => '/finance-marketing/app/Views/financier/index.php'],
   ['key' => 'applications', 'label' => 'Applications', 'icon' => '📄', 'href' => '/finance-marketing/app/Views/financier/applications.php'],
-  ['key' => 'wishlist', 'label' => 'Wishlist', 'icon' => '❤️', 'href' => '/finance-marketing/app/Views/financier/wishlist.php'],
-  ['key' => 'investments', 'label' => 'Investments', 'icon' => '💼', 'href' => '/finance-marketing/app/Views/financier/investments.php'],
+  ['key' => 'wishlist',     'label' => 'Wishlist',     'icon' => '❤️', 'href' => '/finance-marketing/app/Views/financier/wishlist.php'],
+  ['key' => 'investments',  'label' => 'Investments',  'icon' => '💼', 'href' => '/finance-marketing/app/Views/financier/investments.php'],
 ];
 
+// Account menu (header dropdown)
 $accountMenu = [
-  ['label' => 'Profile', 'href' => '/finance-marketing/app/Views/financier/profile.php'],
-
-  ['label' => 'Logout', 'href' => '/finance-marketing/app/Views/Dashboard/index.php', 'class' => 'menu-logout'],
+  ['label' => 'Profile', 'href' => '/finance-marketing/app/Views/financier/profile.php']
 ];
+
 $active = 'profile';
 
-/* 🔥 THIS WAS MISSING */
+// Active tab inside profile (Profile / Security / Documents)
 $activeTab = $_GET['tab'] ?? 'profile';
 ?>
-
 <!doctype html>
 <html lang="en">
 
@@ -31,10 +34,10 @@ $activeTab = $_GET['tab'] ?? 'profile';
   <title>Borrower Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/financier-layout.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/sidebar.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/header.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/profile.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/layout/layout.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/sidebar.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/header.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/profile.css">
 </head>
 
 <body>
@@ -46,7 +49,13 @@ $activeTab = $_GET['tab'] ?? 'profile';
     <?php include __DIR__ . '/../common/header.php'; ?>
 
     <main class="main-content">
-      <?php include __DIR__ . '/../common/profile.php'; ?>
+      <?php
+      /**
+       * VARIABLES REQUIRED BY common/profile.php
+       * DO NOT REMOVE
+       */
+      require __DIR__ . '/../common/profile.php';
+      ?>
     </main>
 
   </div>
