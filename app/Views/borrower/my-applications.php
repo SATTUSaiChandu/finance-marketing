@@ -1,48 +1,42 @@
 <?php
+// ================= Page Meta =================
 $pageTitle    = "My Applications";
 $pageSubtitle = "Borrower";
 
-$userName  = "Borrower";
-$userEmail = "borrower@finance.com";
+$userName  = $user['first_name'] ?? '';
+$userEmail = $user['email'] ?? '';
 
+// ================= Sidebar =================
 $sidebarLinks = [
-  ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/finance-marketing/app/Views/borrower/dashboard.php'],
-  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => '/finance-marketing/app/Views/borrower/my-applications.php'],
-  ['key' => 'loans', 'label' => 'My Loans', 'icon' => '💰', 'href' => '/finance-marketing/app/Views/borrower/my-loans.php'],
+  ['key' => 'dashboard',    'label' => 'Dashboard',        'icon' => '📊', 'href' => '/finance-marketing/public/borrower'],
+  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => '/finance-marketing/public/borrower/my-applications'],
+  ['key' => 'loans',        'label' => 'My Loans',         'icon' => '💰', 'href' => '/finance-marketing/public/borrower/loans'],
 ];
+
 $accountMenu = [
-  ['label' => 'Profile', 'href' => '/finance-marketing/app/Views/borrower/profile.php'],
-
-  ['label' => 'Logout', 'href' => '/finance-marketing/app/Views/Dashboard/index.php', 'class' => 'menu-logout'],
-];
-
-
-$kpis = [
-  [
-    'label' => 'Total Applications',
-    'value' => 3,
-
-    'meta' => 'this month',
-    'icon' => '📄'
-  ],
-  [
-    'label' => 'Approved',
-    'value' => 1,
-
-    'meta' => 'approved',
-    'icon' => '✅'
-  ],
-  [
-    'label' => 'Under Review',
-    'value' => 2,
-
-    'meta' => 'pending',
-    'icon' => '⏳'
-  ],
-
+  ['label' => 'Profile', 'href' => '/finance-marketing/public/borrower/profile'],
 ];
 
 $active = 'applications';
+
+// ================= KPI DATA =================
+$kpis = [
+  ['label' => 'Total Applications', 'value' => $stats['total']    ?? 0, 'icon' => '📄'],
+  ['label' => 'Approved',           'value' => $stats['approved'] ?? 0, 'icon' => '✅'],
+  ['label' => 'Under Review',       'value' => $stats['pending']  ?? 0, 'icon' => '⏳'],
+];
+
+// ================= Status → Badge =================
+$statusBadge = [
+  'pending'  => 'badge badge-amber',
+  'verified' => 'badge badge-blue',
+  'approved' => 'badge badge-green',
+  'rejected' => 'badge badge-red',
+];
+
+// ================= Profile Completion =================
+$overallCompletion = $overallCompletion ?? 0;
+$canApply = $overallCompletion === 100;
 ?>
 
 <!doctype html>
@@ -53,11 +47,11 @@ $active = 'applications';
   <title>My Applications — Borrower</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/financier-layout.css">
+  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/layout.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/sidebar.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/header.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/borrower/my-applications.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/kpis.css">
+  <link rel="stylesheet" href="/finance-marketing/public/assets/css/borrower/my-applications.css">
 </head>
 
 <body>
@@ -79,23 +73,27 @@ $active = 'applications';
           <h2>All Applications</h2>
 
           <div class="section-actions">
-
-            <select>
+            <select disabled>
               <option>All Status</option>
-              <option>Approved</option>
-              <option>Under Review</option>
             </select>
 
-            <a href="/finance-marketing/app/Views/borrower/apply-loan.php" class="btn-primary">
-              + New Application
-            </a>
+            <?php if ($canApply): ?>
+              <a href="/finance-marketing/public/borrower/apply-loan" class="btn-primary">
+                + New Application
+              </a>
+            <?php else: ?>
+              <a href="/finance-marketing/public/borrower/profile" class="btn-disabled"
+                title="Complete your profile to apply">
+                Complete profile to apply
+              </a>
+            <?php endif; ?>
           </div>
         </div>
 
         <table class="data-table">
           <thead>
             <tr>
-              <th>Application ID</th>
+              <th>ID</th>
               <th>Purpose</th>
               <th>Amount</th>
               <th>Term</th>
@@ -106,51 +104,55 @@ $active = 'applications';
           </thead>
 
           <tbody>
-            <tr>
-              <td>APP-001</td>
-              <td>
-                <strong>Business Expansion</strong>
-                <div class="muted">8.5% APR</div>
-              </td>
-              <td>$25,000</td>
-              <td>24 months</td>
-              <td><span class="badge badge-amber">Under Review</span></td>
+            <?php if (!empty($applications)): ?>
+              <?php foreach ($applications as $app): ?>
+                <?php
+                $status = $app['status'] ?? 'pending';
+                $badge  = $statusBadge[$status] ?? 'badge';
+                ?>
+                <tr>
+                  <td>APP-<?= str_pad((int)$app['id'], 3, '0', STR_PAD_LEFT) ?></td>
 
+                  <td>
+                    <strong><?= htmlspecialchars($app['purpose'] ?: 'Loan Application') ?></strong>
+                    <div class="muted">
+                      <?= !empty($app['interest_rate']) ? $app['interest_rate'] . '% APR' : '— APR' ?>
+                    </div>
+                  </td>
 
-              <td>2025-12-05</td>
-              <td><a href="#" class="link-view">delete</a></td>
-            </tr>
+                  <td>$<?= number_format((float)$app['amount']) ?></td>
+                  <td><?= (int)$app['term'] ?> months</td>
 
-            <tr>
-              <td>APP-002</td>
-              <td>
-                <strong>Equipment Purchase</strong>
-                <div class="muted">7.2% APR</div>
-              </td>
-              <td>$15,000</td>
-              <td>12 months</td>
-              <td><span class="badge badge-green">Approved</span></td>
+                  <td>
+                    <span class="<?= $badge ?>">
+                      <?= ucfirst($status) ?>
+                    </span>
+                  </td>
 
+                  <td><?= date('Y-m-d', strtotime($app['created_at'])) ?></td>
 
-              <td>2025-11-28</td>
-
-            </tr>
-
-            <tr>
-              <td>APP-004</td>
-              <td>
-                <strong>Property Investment</strong>
-                <div class="muted">— APR</div>
-              </td>
-              <td>$50,000</td>
-              <td>36 months</td>
-              <td><span class="badge badge-amber">Under Review</span></td>
-
-
-              <td>2025-10-15</td>
-              <td><a href="#" class="link-view">delete</a></td>
-            </tr>
+                  <td>
+                    <?php if ($status === 'pending'): ?>
+                      <a href="/finance-marketing/public/borrower/application/delete?id=<?= (int)$app['id'] ?>"
+                        class="link-view"
+                        onclick="return confirm('Delete this application?')">
+                        delete
+                      </a>
+                    <?php else: ?>
+                      —
+                    <?php endif; ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="7" class="muted" style="text-align:center;padding:20px;">
+                  No applications yet. Start by applying for a loan.
+                </td>
+              </tr>
+            <?php endif; ?>
           </tbody>
+
         </table>
 
       </section>
