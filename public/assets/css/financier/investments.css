@@ -1,0 +1,120 @@
+/* ============================================================
+   FINANCIER — INVESTMENTS PAGE
+   ============================================================ */
+
+   .page-header {
+    background: #fff;
+    padding: 18px 22px;
+    border-radius: 14px;
+    box-shadow: 0 8px 30px rgba(15,23,42,0.05);
+  }
+  
+  .page-header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0;
+  }
+  
+  .page-header p {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #64748b;
+  }
+  
+  .section-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 10px 40px rgba(15,23,42,0.06);
+  }
+  
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .data-table th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: #64748b;
+    padding: 14px 10px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .data-table td {
+    padding: 16px 10px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 15px;
+  }
+  
+  .data-table tr:hover {
+    background: #f8fafc;
+  }
+  
+  .muted {
+    font-size: 13px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+  
+  /* Badges */
+  .badge {
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  
+  .badge-green {
+    background: #ecfdf5;
+    color: #047857;
+  }
+  
+  .badge-gray {
+    background: #f1f5f9;
+    color: #475569;
+  }
+  
+  .badge-red {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+  
+  /* Returns */
+  .positive {
+    color: #16a34a;
+    font-weight: 700;
+  }
+  
+  .negative {
+    color: #dc2626;
+    font-weight: 700;
+  }
+  
+  /* Mobile */
+  @media (max-width: 900px) {
+    .data-table thead {
+      display: none;
+    }
+  
+    .data-table,
+    .data-table tbody,
+    .data-table tr,
+    .data-table td {
+      display: block;
+      width: 100%;
+    }
+  
+    .data-table tr {
+      padding: 14px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+  
+    .data-table td {
+      padding: 6px 0;
+    }
+  }
+  

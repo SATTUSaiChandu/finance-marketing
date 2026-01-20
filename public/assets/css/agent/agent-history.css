@@ -1,0 +1,55 @@
+/* ============================
+   AGENT HISTORY PAGE
+   ============================ */
+
+   .list-block {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 12px 48px rgba(16,24,40,0.06);
+  }
+  
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .review-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid rgba(15,23,36,0.05);
+    box-shadow: 0 8px 24px rgba(16,24,40,0.04);
+  }
+  
+  .avatar-sm {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+  }
+  
+  .meta {
+    flex: 1;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
