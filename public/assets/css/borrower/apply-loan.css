@@ -1,0 +1,198 @@
+/* ============================================================
+   BORROWER — APPLY LOAN (MULTI-STEP FORM)
+   ============================================================ */
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  margin-bottom: 14px;
+  font-weight: 600;
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- STEPS BAR ---------------- */
+.steps {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.step {
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  background: #e5e7eb;
+  color: #64748b;
+}
+
+.step.active {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* ---------------- FORM CARD ---------------- */
+.form-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* ---------------- FORM STEPS ---------------- */
+.form-step {
+  display: none;
+}
+
+.form-step.active {
+  display: block;
+}
+
+.form-step h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.form-step .muted {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 18px;
+}
+
+/* ---------------- GRID ---------------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------- INPUTS ---------------- */
+label {
+  font-size: 14px;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+  background: #fff;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+/* ---------------- FORM ACTIONS ---------------- */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+/* ---------------- BUTTONS ---------------- */
+.btn-primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #1e4fd1;
+}
+
+.btn-outline {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background: #f8fafc;
+}
+
+/* ---------------- UPLOAD BOX ---------------- */
+.upload-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px dashed #cbd5e1;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.upload-box button {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  cursor: pointer;
+}
+
+.upload-box button:hover {
+  background: #f1f5f9;
+}
+
+/* ---------------- REVIEW ---------------- */
+.review-box {
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+/* ---------------- CHECKBOX ---------------- */
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.checkbox input {
+  width: auto;
+}

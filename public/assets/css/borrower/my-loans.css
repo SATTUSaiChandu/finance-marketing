@@ -1,0 +1,126 @@
+/* =====================================
+   MY LOANS — BORROWER
+   ===================================== */
+
+   .loans-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .loan-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+    overflow: hidden;
+  }
+  
+  /* SUMMARY ROW */
+  .loan-summary {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr 1fr;
+    gap: 16px;
+    padding: 20px;
+    cursor: pointer;
+    align-items: center;
+  }
+  
+  .loan-summary:hover {
+    background: #f8fafc;
+  }
+  
+  .loan-status {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+  }
+  
+  .loan-status.active {
+    background: #ecfdf5;
+    color: #047857;
+  }
+  
+  .loan-progress small {
+    font-size: 12px;
+    color: #64748b;
+  }
+  
+  .progress-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  
+  .progress-bar span {
+    height: 100%;
+    display: block;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+  }
+  
+  .loan-toggle {
+    font-weight: 700;
+    color: #2563eb;
+  }
+  
+  /* DETAILS */
+  .loan-details {
+    display: none;
+    padding: 24px;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .loan-card.open .loan-details {
+    display: block;
+  }
+  
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  
+  .details-grid h4 {
+    margin-bottom: 10px;
+  }
+  
+  .loan-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  
+  .btn-secondary {
+    background: #f1f5f9;
+    color: #0f172a;
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  
+  /* Responsive */
+  @media (max-width: 900px) {
+    .loan-summary {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  

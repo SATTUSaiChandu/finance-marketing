@@ -1,0 +1,142 @@
+/* ============================================================
+   ADMIN DASHBOARD PAGE
+   Layout: Main Content + Right Sidebar (340px)
+   ============================================================ */
+
+/* ---- DASHBOARD LAYOUT ---- */
+.dashboard-wrap {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* Collapse right column on tablets */
+@media (max-width: 1100px) {
+  .dashboard-wrap {
+      grid-template-columns: 1fr;
+  }
+}
+
+/* ---- RIGHT COLUMN ---- */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .right-column {
+      display: none;
+  }
+}
+
+/* ---- CONTENT BLOCK (tables, sections) ---- */
+.content-block {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.content-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+/* ---- RECENT USERS TABLE ---- */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 780px;
+}
+
+.user-table thead th {
+  padding: 14px 12px;
+  color: #64748b;
+  font-weight: 700;
+  border-bottom: 1px solid #eef2f6;
+  text-align: left;
+}
+
+.user-table tbody td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f3f4f6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+}
+
+/* ---- BADGES ---- */
+.badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.badge-green { background:#ecfdf5; color:#059669; }
+.badge-amber { background:#fffbeb; color:#c2410c; }
+.badge-red { background:#fff1f2; color:#b91c1c; }
+
+/* ---- MODULE CARDS ---- */
+.modules {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 16px;
+}
+
+@media(max-width:900px){
+  .modules { grid-template-columns: 1fr; }
+}
+
+.module-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(16,24,40,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.module-card h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.module-card p {
+  margin: 0;
+  color: #475569;
+}
+
