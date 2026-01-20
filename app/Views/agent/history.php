@@ -5,33 +5,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Verified Applications — FinanceHub</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/agent-layout.css">
+  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/layout.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/agent/agent-history.css" />
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/header.css" />
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/sidebar.css" />
-
-
 </head>
 
 <body>
 
-  <!-- ========================= SIDEBAR ========================= -->
   <?php
+  /* ================= SIDEBAR (ROUTE BASED) ================= */
   $sidebarLinks = [
     [
       'key'   => 'dashboard',
       'label' => 'Dashboard',
       'icon'  => '🏠',
-      'href'  => '/finance-marketing/app/Views/agent/index.php',
+      'href'  => '/agent',
     ],
     [
       'key'   => 'history',
       'label' => 'History',
       'icon'  => '📊',
-      'href'  => '/finance-marketing/app/Views/agent/history.php',
+      'href'  => '/agent/history',
     ],
-
   ];
 
   $active = 'history';
@@ -39,27 +37,25 @@
   include __DIR__ . '/../common/sidebar.php';
   ?>
 
-  <!-- ========================= PAGE WRAP ========================= -->
   <div class="page-wrap">
 
-    <!-- Fixed Header -->
     <?php
-    $pageTitle     = "History";
-    $pageSubtitle  = "Agent History";
-
+    /* ================= HEADER ================= */
+    $pageTitle    = "History";
+    $pageSubtitle = "Agent History";
 
     $userName  = "Agent";
     $userEmail = "agent@finance.com";
+
     $accountMenu = [
-      ['label' => 'Home', 'href' => '/finance-marketing/app/Views/Dashboard/index.php'],
-      ['label' => 'Logout', 'href' => '/finance-marketing/app/Views/Dashboard/index.php', 'class' => 'menu-logout'],
+      ['label' => 'Home',   'href' => '/dashboard'],
+      ['label' => 'Logout', 'href' => '/auth/signin', 'class' => 'menu-logout'],
     ];
 
     include __DIR__ . '/../common/header.php';
     ?>
 
-
-    <!-- ========================= VERIFIED LIST ========================= -->
+    <!-- ================= VERIFIED LIST ================= -->
     <main>
       <section class="list-block">
 

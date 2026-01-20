@@ -2,18 +2,30 @@
 $pageTitle    = "Profile";
 $pageSubtitle = "Settings";
 
-$userName  = "Borrower";
-$userEmail = "borrower@finance.com";
+/**
+ * REQUIRED FROM CONTROLLER:
+ * $user    → Auth::user()
+ * $profile → Profile::get($user['id'], 'borrower')
+ */
 
+$userName  = $user['first_name'];
+$userEmail = $user['email'];
+$role      = 'borrower';
+$base      = '/finance-marketing/public';
+
+/* SIDEBAR ROUTES */
 $sidebarLinks = [
-  ['key' => 'dashboard',     'label' => 'Dashboard',        'icon' => '📊', 'href' => '/finance-marketing/app/Views/borrower/dashboard.php'],
-  ['key' => 'applications',  'label' => 'My Applications', 'icon' => '📄', 'href' => '/finance-marketing/app/Views/borrower/my-applications.php'],
-  ['key' => 'loans',         'label' => 'My Loans',         'icon' => '💰', 'href' => '/finance-marketing/app/Views/borrower/my-loans.php'],
+  ['key' => 'dashboard',    'label' => 'Dashboard',        'icon' => '📊', 'href' => "{$base}/borrower"],
+  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => "{$base}/borrower/my-applications"],
+  ['key' => 'loans',        'label' => 'My Loans',         'icon' => '💰', 'href' => "{$base}/borrower/loans"],
+];
+$accountMenu = [
+  ['label' => 'Profile', 'href' => '/finance-marketing/public/borrower/profile']
 ];
 
 $active = 'profile';
 
-/* 🔥 THIS WAS MISSING */
+/* TAB HANDLING */
 $activeTab = $_GET['tab'] ?? 'profile';
 ?>
 
@@ -25,10 +37,10 @@ $activeTab = $_GET['tab'] ?? 'profile';
   <title>Borrower Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/financier-layout.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/sidebar.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/header.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/profile.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/layout/layout.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/sidebar.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/header.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/profile.css">
 </head>
 
 <body>
@@ -40,7 +52,13 @@ $activeTab = $_GET['tab'] ?? 'profile';
     <?php include __DIR__ . '/../common/header.php'; ?>
 
     <main class="main-content">
-      <?php include __DIR__ . '/../common/profile.php'; ?>
+      <?php
+      /**
+       * VARIABLES REQUIRED BY common/profile.php
+       * DO NOT REMOVE
+       */
+      require __DIR__ . '/../common/profile.php';
+      ?>
     </main>
 
   </div>

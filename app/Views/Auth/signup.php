@@ -1,3 +1,8 @@
+<?php
+$BASE = '/finance-marketing/public';
+$error = $_SESSION['error'] ?? null;
+unset($_SESSION['error']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,51 +10,88 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Sign Up</title>
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/dashboard.css" />
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/auth.css" />
+
+  <link rel="stylesheet" href="<?= $BASE ?>/assets/css/auth.css" />
 </head>
 
 <body>
   <main>
     <div class="container">
       <section class="card" aria-label="Sign Up form">
+
+        <!-- LOGO -->
         <div class="logo-box">
-          <a href="../Dashboard/index.php"><img
-              src="/finance-marketing/public/assets/images/Application Logo.png"
-              alt="App Logo" /></a>
+          <a href="<?= $BASE ?>/dashboard">
+            <img
+              src="<?= $BASE ?>/assets/images/Application Logo.png"
+              alt="App Logo" />
+          </a>
         </div>
-        <h3>Sign Up</h3>
-        <div class="divider" aria-hidden></div>
 
-        <label>User Name:</label>
-        <input type="text" value="johndoe" />
+        <h3>Create Account</h3>
+        <div class="divider"></div>
 
-        <label>Password:</label>
-        <input type="password" />
+        <!-- ERROR MESSAGE -->
+        <?php if ($error): ?>
+          <div class="error-msg"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
 
-        <label>Confirm Password:</label>
-        <input type="password" />
+        <!-- SIGNUP FORM -->
+        <form method="POST" action="<?= $BASE ?>/auth/signup">
 
-        <label>D.O.B:</label>
-        <input type="date" />
 
-        <label>Pin - 4 Digit (Required for Forget Password)</label>
-        <input type="number" placeholder="e.g. 1234" />
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            required
+            placeholder="john@example.com" />
 
-        <button class="btn" onclick="alert('fake sign up')">
-          SIGN Up As Borrower
-        </button>
-        <div class="small">Become a Financier:</div>
-        <button class="btn" onclick="alert('fake sign up')">
-          SIGN Up As Financier
-        </button>
+          <label>Password</label>
+          <input
+            type="password"
+            name="password"
+            required />
+
+          <label>Confirm Password</label>
+          <input
+            type="password"
+            name="confirm_password"
+            required />
+
+          <label>Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            required />
+
+          <label>4-Digit PIN (for password recovery)</label>
+          <input
+            type="number"
+            name="pin"
+            inputmode="numeric"
+            pattern="\d{4}"
+            maxlength="4"
+            required
+            placeholder="1234" />
+
+          <label>Register As</label>
+          <select name="role" required>
+            <option value="borrower">Borrower</option>
+            <option value="financier">Financier</option>
+          </select>
+
+          <button type="submit" class="btn">
+            CREATE ACCOUNT
+          </button>
+        </form>
+
+        <!-- LINKS -->
         <div class="terms">
-          <a class="link" href="../common/terms.php">Terms &amp; Conditions</a>
-          <a class="link" href="../common/privacy.php">Privacy Policy</a>
-          <a class="link" href="signin.php">Already Have Account</a>
+          <a class="link" href="<?= $BASE ?>/terms">Terms &amp; Conditions</a>
+          <a class="link" href="<?= $BASE ?>/privacy">Privacy Policy</a>
+          <a class="link" href="<?= $BASE ?>/auth/signin">Already have an account?</a>
         </div>
-
-        <div class="group-sep"></div>
 
       </section>
     </div>
@@ -58,16 +100,14 @@
   <footer>
     <div class="footer-bottom">
       <div>
-        © <span id="year"></span> Financement Faciele. All rights reserved. ·
-        Powered By Nouverely
-      </div>
-      <div class="small-links">
-        <a href="../common/privacy.php">Privacy</a> ·
-        <a href="../common/terms.php">Terms</a> ·
-        <a href="../common/contact.php">Support</a>
+        © <span id="year"></span> Financement Faciele · Powered by Nouverely
       </div>
     </div>
   </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 
 </html>

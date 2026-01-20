@@ -209,3 +209,18 @@
     width: 100%;
   }
 }
+
+/* progress bar */
+
+.progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #16a34a;
+  transition: width 0.3s ease;
+}

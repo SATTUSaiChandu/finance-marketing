@@ -6,7 +6,7 @@ $pageSubtitle = "Settings";
 $userName  = $user['first_name'];
 $userEmail = $user['email'];
 $base      = '/finance-marketing/public';
-$role      = 'borrower';
+$role      = 'financier';
 
 // Sidebar (Financier)
 $sidebarLinks = [

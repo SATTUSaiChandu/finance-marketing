@@ -2,21 +2,30 @@
 $pageTitle    = "My Loans";
 $pageSubtitle = "Borrower";
 
-$userName  = "Borrower";
-$userEmail = "borrower@finance.com";
+/**
+ * REQUIRED FROM CONTROLLER:
+ * $user
+ * $loans
+ * $stats
+ */
 
+$base = '/finance-marketing/public';
+
+$userName  = $user['first_name'];
+$userEmail = $user['email'];
+
+/* SIDEBAR ROUTES */
 $sidebarLinks = [
-  ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/finance-marketing/app/Views/borrower/dashboard.php'],
-  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => '/finance-marketing/app/Views/borrower/my-applications.php'],
-  ['key' => 'loans', 'label' => 'My Loans', 'icon' => '💰', 'href' => '/finance-marketing/app/Views/borrower/my-loans.php'],
+  ['key' => 'dashboard',    'label' => 'Dashboard',        'icon' => '📊', 'href' => "{$base}/borrower"],
+  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => "{$base}/borrower/my-applications"],
+  ['key' => 'loans',        'label' => 'My Loans',         'icon' => '💰', 'href' => "{$base}/borrower/loans"],
 ];
-
 
 $accountMenu = [
-  ['label' => 'Profile', 'href' => '/finance-marketing/app/Views/borrower/profile.php'],
+  ['label' => 'Profile', 'href' => "{$base}/borrower/profile"],
 
-  ['label' => 'Logout', 'href' => '/finance-marketing/app/Views/Dashboard/index.php', 'class' => 'menu-logout'],
 ];
+
 $active = 'loans';
 ?>
 
@@ -28,10 +37,10 @@ $active = 'loans';
   <title>My Loans — Borrower</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/financier-layout.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/sidebar.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/header.css">
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/borrower/my-loans.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/layout/layout.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/sidebar.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/common/header.css">
+  <link rel="stylesheet" href="<?= $base ?>/assets/css/borrower/my-loans.css">
 </head>
 
 <body>
@@ -43,74 +52,108 @@ $active = 'loans';
 
     <main class="main-content">
 
-      <!-- KPI component (already common) -->
+      <!-- KPI component -->
       <?php include __DIR__ . '/../common/kpis.php'; ?>
 
       <!-- Loans -->
       <section class="loans-list">
 
-        <!-- LOAN CARD -->
-        <div class="loan-card">
+        <?php if (empty($loans)): ?>
+          <div class="empty-state">
+            <h3>No active loans yet</h3>
+            <p>Once your applications are approved, they will appear here.</p>
+          </div>
+        <?php endif; ?>
 
-          <div class="loan-summary" onclick="toggleLoan(this)">
-            <div>
-              <strong>LOAN-001</strong>
-              <div class="muted">$15,000 · 24 months</div>
-            </div>
+        <?php foreach ($loans as $loan): ?>
 
-            <div class="loan-status active">Active</div>
+          <?php
+          $paidPercent = $loan['amount'] > 0
+            ? min(100, round((($loan['amount'] - ($loan['remaining_amount'] ?? $loan['amount'])) / $loan['amount']) * 100))
+            : 0;
+          ?>
 
-            <div>
-              <div class="muted">Next Payment</div>
-              <strong>$520</strong>
-            </div>
+          <div class="loan-card">
 
-            <div class="loan-progress">
-              <div class="progress-bar">
-                <span style="width:42%"></span>
+            <!-- SUMMARY -->
+            <div class="loan-summary" onclick="toggleLoan(this)">
+              <div>
+                <strong>LOAN-<?= str_pad($loan['id'], 3, '0', STR_PAD_LEFT) ?></strong>
+                <div class="muted">
+                  $<?= number_format($loan['amount'], 2) ?> · <?= (int)$loan['term'] ?> months
+                </div>
               </div>
-              <small>42% paid</small>
+
+              <div class="loan-status active">
+                <?= ucfirst($loan['status']) ?>
+              </div>
+
+              <div>
+                <div class="muted">Next Payment</div>
+                <strong>
+                  <?= isset($loan['monthly_payment'])
+                    ? '$' . number_format($loan['monthly_payment'], 2)
+                    : '—'
+                  ?>
+                </strong>
+              </div>
+
+              <div class="loan-progress">
+                <div class="progress-bar">
+                  <span style="width:<?= $paidPercent ?>%"></span>
+                </div>
+                <small><?= $paidPercent ?>% paid</small>
+              </div>
+
+              <div class="loan-toggle">View details ⌄</div>
             </div>
 
-            <div class="loan-toggle">View details ⌄</div>
+            <!-- DETAILS -->
+            <div class="loan-details">
+              <div class="details-grid">
+
+                <div>
+                  <h4>Loan Details</h4>
+                  <p><strong>Amount:</strong> $<?= number_format($loan['amount'], 2) ?></p>
+                  <p><strong>APR:</strong> <?= $loan['interest_rate'] ?? '—' ?>%</p>
+                  <p><strong>Duration:</strong> <?= (int)$loan['term'] ?> months</p>
+                  <p><strong>Status:</strong> <?= ucfirst($loan['status']) ?></p>
+                </div>
+
+                <div>
+                  <h4>Financier</h4>
+                  <p><strong>Name:</strong> <?= $loan['financier_name'] ?? 'Assigned later' ?></p>
+                  <p><strong>Email:</strong> <?= $loan['financier_email'] ?? '—' ?></p>
+                  <p><strong>Location:</strong> <?= $loan['financier_location'] ?? '—' ?></p>
+                </div>
+
+                <div>
+                  <h4>Repayment Summary</h4>
+                  <p><strong>Paid:</strong> $<?= number_format($loan['paid_amount'] ?? 0, 2) ?></p>
+                  <p><strong>Remaining:</strong> $<?= number_format($loan['remaining_amount'] ?? $loan['amount'], 2) ?></p>
+                  <p><strong>Next Due:</strong> <?= $loan['next_due_date'] ?? '—' ?></p>
+                </div>
+
+              </div>
+
+              <div class="loan-actions">
+                <?php if (!empty($loan['financier_email'])): ?>
+                  <a href="mailto:<?= htmlspecialchars($loan['financier_email']) ?>" class="btn-secondary">
+                    Contact Financier
+                  </a>
+                <?php endif; ?>
+
+                <?php if (!empty($loan['agreement_path'])): ?>
+                  <a href="<?= $base . $loan['agreement_path'] ?>" class="btn-primary" download>
+                    Download Agreement
+                  </a>
+                <?php endif; ?>
+              </div>
+
+            </div>
           </div>
 
-          <!-- EXPANDED DETAILS -->
-          <div class="loan-details">
-
-            <div class="details-grid">
-              <div>
-                <h4>Loan Details</h4>
-                <p><strong>Amount:</strong> $15,000</p>
-                <p><strong>APR:</strong> 7.2%</p>
-                <p><strong>Duration:</strong> 24 months</p>
-                <p><strong>Status:</strong> Active</p>
-              </div>
-
-              <div>
-                <h4>Financier</h4>
-                <p><strong>Name:</strong> Alpha Capital</p>
-                <p><strong>Email:</strong> support@alphacapital.com</p>
-                <p><strong>Location:</strong> Paris, FR</p>
-              </div>
-
-              <div>
-                <h4>Repayment Summary</h4>
-                <p><strong>Paid:</strong> $6,300</p>
-                <p><strong>Remaining:</strong> $8,700</p>
-                <p><strong>Next Due:</strong> Dec 15, 2025</p>
-              </div>
-            </div>
-
-            <div class="loan-actions">
-              <a href="#" class="btn-secondary">Contact Financier</a>
-              <a href="#" class="btn-primary">Download Agreement</a>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Duplicate loan-card for other loans -->
+        <?php endforeach; ?>
 
       </section>
 
@@ -119,8 +162,7 @@ $active = 'loans';
 
   <script>
     function toggleLoan(el) {
-      const card = el.parentElement;
-      card.classList.toggle('open');
+      el.parentElement.classList.toggle('open');
     }
   </script>
 

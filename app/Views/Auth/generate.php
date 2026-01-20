@@ -1,55 +1,56 @@
+<?php
+$BASE = '/finance-marketing/public';
+$error = $_SESSION['error'] ?? null;
+unset($_SESSION['error']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Generate New Password</title>
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/dashboard.css" />
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/auth.css" />
+  <title>Reset Password</title>
+
+  <link rel="stylesheet" href="<?= $BASE ?>/assets/css/auth.css" />
 </head>
 
 <body>
   <main>
     <div class="container">
-      <section class="card" aria-label="Generate password">
+      <section class="card">
+
         <div class="logo-box">
-          <a href="../Dashboard/index.php"><img
-              src="/finance-marketing/public/assets/images/Application Logo.png"
-              alt="App Logo" /></a>
+          <a href="<?= $BASE ?>/dashboard">
+            <img src="<?= $BASE ?>/assets/images/Application Logo.png" alt="App Logo" />
+          </a>
         </div>
-        <h3>Generate New Password</h3>
-        <div class="divider" aria-hidden></div>
 
-        <label>Password</label>
-        <input type="password" />
+        <h3>Set New Password</h3>
+        <div class="divider"></div>
 
-        <label>Confirm Password</label>
-        <input type="password" />
+        <?php if ($error): ?>
+          <div class="error-msg"><?= htmlspecialchars($error) ?></div>
+        <?php endif; ?>
 
-        <button class="btn" onclick="alert('password updated')">
-          Generate Password
-        </button>
+        <form method="POST" action="<?= $BASE ?>/auth/generate">
+          <label>New Password</label>
+          <input type="password" name="password" required />
+
+          <label>Confirm Password</label>
+          <input type="password" name="confirm_password" required />
+
+          <button class="btn" type="submit">
+            UPDATE PASSWORD
+          </button>
+        </form>
 
         <div class="group-sep"></div>
-        <a class="link" href="signin.php">Back to Sign In</a>
+
+        <a class="link" href="<?= $BASE ?>/auth/signin">Back to Sign In</a>
+
       </section>
     </div>
   </main>
-
-  <footer>
-    <div class="footer-bottom">
-      <div>
-        © <span id="year"></span> Financement Faciele. All rights reserved. ·
-        Powered By Nouverely
-      </div>
-      <div class="small-links">
-        <a href="../common/privacy.php">Privacy</a> ·
-        <a href="../common/terms.php">Terms</a> ·
-        <a href="../common/contact.php">Support</a>
-      </div>
-    </div>
-  </footer>
 </body>
 
 </html>
