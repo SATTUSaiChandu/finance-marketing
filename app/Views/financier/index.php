@@ -1,3 +1,50 @@
+<?php
+
+
+/* ================= PAGE META ================= */
+$pageTitle    = "Dashboard";
+$pageSubtitle = "Financier";
+
+$userName  = $user['first_name'];
+$userEmail = $user['email'];
+
+$active = 'dashboard';
+$sidebarLinks = [
+  ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/finance-marketing/app/Views/financier/index.php'],
+  ['key' => 'applications', 'label' => 'Applications', 'icon' => '📄', 'href' => '/finance-marketing/app/Views/financier/applications.php'],
+  ['key' => 'wishlist', 'label' => 'Wishlist', 'icon' => '❤️', 'href' => '/finance-marketing/app/Views/financier/wishlist.php'],
+  ['key' => 'investments', 'label' => 'Investments', 'icon' => '💼', 'href' => '/finance-marketing/app/Views/financier/investments.php'],
+];
+/* ================= KPIs ================= */
+$kpis = [
+  [
+    'label' => 'Available Applications',
+    'value' => $stats['available'],
+    'icon'  => '👥'
+  ],
+  [
+    'label' => 'Wishlist',
+    'value' => $stats['wishlist'],
+    'icon'  => '❤️'
+  ],
+  [
+    'label' => 'Active Loans',
+    'value' => $stats['active_loans'],
+    'icon'  => '💰'
+  ],
+  [
+    'label' => 'Total Invested',
+    'value' => '$' . number_format($stats['total_invested']),
+    'icon'  => '📈'
+  ],
+];
+
+$accountMenu = [
+  ['label' => 'Profile', 'href' => '/finance-marketing/app/Views/financier/profile.php']
+];
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -6,7 +53,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Financier Dashboard — FinanceHub</title>
 
-  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/financier-layout.css">
+  <link rel="stylesheet" href="/finance-marketing/public/assets/css/layout/layout.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/financier/financier-dashboard.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/header.css">
   <link rel="stylesheet" href="/finance-marketing/public/assets/css/common/sidebar.css">
@@ -15,82 +62,25 @@
 
 <body>
 
-  <?php
-  $sidebarLinks = [
-    ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/finance-marketing/app/Views/financier/index.php'],
-    ['key' => 'applications', 'label' => 'Applications', 'icon' => '📄', 'href' => '/finance-marketing/app/Views/financier/applications.php'],
-    ['key' => 'wishlist', 'label' => 'Wishlist', 'icon' => '❤️', 'href' => '/finance-marketing/app/Views/financier/wishlist.php'],
-    ['key' => 'investments', 'label' => 'Investments', 'icon' => '💼', 'href' => '/finance-marketing/app/Views/financier/investments.php'],
-
-  ];
-  $active = 'dashboard';
-  include __DIR__ . '/../common/sidebar.php';
-  ?>
+  <!-- ================= SIDEBAR ================= -->
+  <?php include __DIR__ . '/../common/sidebar.php'; ?>
 
   <div class="page-wrap">
 
-    <?php
-    $pageTitle = "Dashboard";
-    $pageSubtitle = "Financier";
-    $userName = "Financier";
-    $userEmail = "financier@finance.com";
-    $accountMenu = [
-      ['label' => 'Profile', 'href' => '/finance-marketing/app/Views/financier/profile.php'],
-
-      ['label' => 'Logout', 'href' => '/finance-marketing/app/Views/Dashboard/index.php', 'class' => 'menu-logout'],
-    ];
-    include __DIR__ . '/../common/header.php';
-    ?>
+    <!-- ================= HEADER ================= -->
+    <?php include __DIR__ . '/../common/header.php'; ?>
 
     <main class="main-content">
 
-      <!-- Page intro -->
+      <!-- ================= KPIs ================= -->
+      <?php include __DIR__ . '/../common/kpis.php'; ?>
 
-      <?php
-      $kpis = [
-        [
-          'label' => 'Available Applications',
-          'value' => '128',
-          'delta' => '+12',
-          'deltaSign' => '+',
-          'meta' => 'this week',
-          'icon' => '👥'
-        ],
-        [
-          'label' => 'Wishlist',
-          'value' => '8',
-          'delta' => '+4',
-          'deltaSign' => '+',
-          'meta' => 'new matches',
-          'icon' => '❤️'
-        ],
-        [
-          'label' => 'Active Loans',
-          'value' => '12',
-          'delta' => '98%',
-          'deltaSign' => '+',
-          'meta' => 'on-time',
-          'icon' => '💰'
-        ],
-        [
-          'label' => 'Total Invested',
-          'value' => '$580K',
-          'delta' => '+15%',
-          'deltaSign' => '+',
-          'meta' => 'returns',
-          'icon' => '📈'
-        ],
-      ];
-
-      include __DIR__ . '/../common/kpis.php';
-      ?>
-
-
-
-      <!-- Simple content (NO charts) -->
+      <!-- ================= RECENT APPLICATIONS ================= -->
       <section class="section-card">
 
         <table class="data-table">
+          <caption class="sr-only">Recent borrower applications</caption>
+
           <thead>
             <tr>
               <th>Borrower</th>
@@ -102,31 +92,48 @@
           </thead>
 
           <tbody>
-            <tr>
-              <td>John Doe</td>
-              <td>$25,000</td>
-              <td><span class="badge badge-green">Active</span></td>
-              <td>12%</td>
-              <td class="actions-cell">
-                <a href="application.php?id=1" class="btn-view">View</a>
-                <button class="btn-like" aria-label="Add to wishlist">♡</button>
-              </td>
-            </tr>
 
-            <tr>
-              <td>Jane Smith</td>
-              <td>$15,000</td>
-              <td><span class="badge badge-amber">Pending</span></td>
-              <td>10%</td>
-              <td class="actions-cell">
-                <a href="application.php?id=2" class="btn-view">View</a>
-                <button class="btn-like" aria-label="Add to wishlist">♡</button>
-              </td>
-            </tr>
+            <?php if (empty($recentApplications)): ?>
+              <tr>
+                <td colspan="5" class="muted" style="text-align:center;padding:20px;">
+                  No verified applications available yet.
+                </td>
+              </tr>
+            <?php endif; ?>
+
+            <?php foreach ($recentApplications as $app): ?>
+              <tr>
+                <td>
+                  <strong>
+                    <?= htmlspecialchars($app['first_name'] . ' ' . $app['last_name']) ?>
+                  </strong>
+                </td>
+
+                <td>
+                  $<?= number_format($app['amount']) ?>
+                </td>
+
+                <td>
+                  <span class="badge badge-green">Verified</span>
+                </td>
+
+                <td class="muted">—</td>
+
+                <td class="actions-cell">
+                  <a
+                    href="/finance-marketing/app/Views/financier/applications.php"
+                    class="btn-view">
+                    View
+                  </a>
+                </td>
+              </tr>
+            <?php endforeach; ?>
+
           </tbody>
+
         </table>
 
-        <!-- Load more -->
+        <!-- ================= LOAD MORE ================= -->
         <div class="table-footer">
           <a href="applications.php" class="btn-load-more">
             Load More Applications →
@@ -134,7 +141,6 @@
         </div>
 
       </section>
-
 
     </main>
   </div>
