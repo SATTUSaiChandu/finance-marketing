@@ -1,39 +1,69 @@
 <?php
-// sidebar.php (partial, NO <html>, NO <head>, NO <body>)
 
-// Data passed from page:
+/**
+ * Sidebar partial
+ * - No <html>, <head>, <body>
+ * - Reusable across Admin / Agent / Borrower / Financier
+ */
+
+/* Data passed from controller/page */
 $sidebarLinks = $sidebarLinks ?? [];
-$active       = $active       ?? ''; // which item is active
+$active       = $active       ?? '';
 ?>
 
 <aside class="sidebar" aria-label="Main navigation">
-  <div>
+  <div class="sidebar-top">
+
+    <!-- Brand -->
     <div class="brand">
       <div class="logo">
-        <img src="/finance-marketing/public/assets/images/Application Logo.png" alt="FinanceHub logo" class="logo-img" />
+        <img
+          src="/finance-marketing/public/assets/images/Application Logo.png"
+          alt="Financement Faciele logo"
+          class="logo-img" />
       </div>
-      <div>
+
+      <div class="brand-text">
         <div class="brand-title">Financement Faciele</div>
       </div>
     </div>
 
-    <nav class="sidenav" aria-label="Primary">
+    <!-- Navigation -->
+    <nav class="sidenav" aria-label="Primary navigation">
       <ul>
         <?php foreach ($sidebarLinks as $item): ?>
+          <?php
+          $key   = $item['key']   ?? '';
+          $label = $item['label'] ?? '';
+          $icon  = $item['icon']  ?? '';
+          $href  = $item['href']  ?? '#';
+          ?>
+
           <li>
             <a
-              href="<?= htmlspecialchars($item['href']) ?>"
-              class="nav-item <?= $item['key'] === $active ? 'active' : '' ?>">
-              <span class="nav-ico"><?= htmlspecialchars($item['icon']) ?></span>
-              <span class="nav-label"><?= htmlspecialchars($item['label']) ?></span>
+              href="<?= htmlspecialchars($href) ?>"
+              class="nav-item <?= $key === $active ? 'active' : '' ?>"
+              aria-current="<?= $key === $active ? 'page' : 'false' ?>">
+
+              <?php if ($icon !== ''): ?>
+                <span class="nav-ico"><?= htmlspecialchars($icon) ?></span>
+              <?php endif; ?>
+
+              <span class="nav-label"><?= htmlspecialchars($label) ?></span>
             </a>
           </li>
         <?php endforeach; ?>
       </ul>
     </nav>
+
   </div>
 
+  <!-- Footer -->
   <div class="sidebar-footer">
-    <a href="/finance-marketing/app/Views/common/contact.php" class="help-btn">❓ Help &amp; Support</a>
+    <a
+      href="/finance-marketing/app/Views/common/contact.php"
+      class="help-btn">
+      ❓ Help &amp; Support
+    </a>
   </div>
 </aside>
