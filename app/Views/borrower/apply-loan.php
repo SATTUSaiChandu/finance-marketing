@@ -5,10 +5,9 @@ $pageSubtitle = "Borrower";
 $userName  = $user['first_name'];
 $userEmail = $user['email'];
 
-/* SIDEBAR ROUTES */
 $sidebarLinks = [
   ['key' => 'dashboard',    'label' => 'Dashboard',        'icon' => '📊', 'href' => '/finance-marketing/public/borrower'],
-  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => '/finance-marketing/public/borrower/applications'],
+  ['key' => 'applications', 'label' => 'My Applications', 'icon' => '📄', 'href' => '/finance-marketing/public/borrower/my-applications'],
   ['key' => 'loans',        'label' => 'My Loans',         'icon' => '💰', 'href' => '/finance-marketing/public/borrower/loans'],
 ];
 
@@ -46,7 +45,6 @@ $active = '';
       <div class="steps">
         <div class="step active">Loan Details</div>
         <div class="step">Financial Info</div>
-        <div class="step">Documents</div>
         <div class="step">Review</div>
       </div>
 
@@ -55,8 +53,7 @@ $active = '';
         id="loanForm"
         class="form-card"
         method="POST"
-        action="/borrower/apply-loan"
-        enctype="multipart/form-data">
+        action="/finance-marketing/public/borrower/apply-loan">
 
         <!-- STEP 1 -->
         <section class="form-step active">
@@ -129,25 +126,6 @@ $active = '';
         </section>
 
         <!-- STEP 3 -->
-        <section class="form-step">
-          <h2>Supporting Documents</h2>
-
-          <label>ID Proof</label>
-          <input type="file" name="id_proof" required>
-
-          <label>Address Proof</label>
-          <input type="file" name="address_proof" required>
-
-          <label>Income Proof</label>
-          <input type="file" name="income_proof" required>
-
-          <div class="form-actions">
-            <button type="button" class="btn-outline prev-btn">← Previous</button>
-            <button type="button" class="btn-primary next-btn">Next Step →</button>
-          </div>
-        </section>
-
-        <!-- STEP 4 -->
         <section class="form-step">
           <h2>Review Your Application</h2>
 

@@ -1,96 +1,135 @@
 <?php
 
-require_once __DIR__ . '/BaseController.php';
+require_once 'BaseController.php';
+require_once __DIR__ . '/../Core/Auth.php';
+
+require_once __DIR__ . '/../Models/User.php';
+require_once __DIR__ . '/../Models/Profile.php';
+require_once __DIR__ . '/../Models/Document.php';
 
 class AdminController extends BaseController
 {
-  /**
-   * Admin Dashboard
-   * Route: /admin
-   */
-  public function index()
+  private string $base = '/finance-marketing/public';
+
+  /* ================= AUTH GUARD ================= */
+  private function guard(): void
   {
-    $data = [
-      'pageTitle'    => 'Admin Dashboard',
-      'pageSubtitle' => 'Administration',
-
-      'userName'  => 'Admin',
-      'userEmail' => 'admin@finance.com',
-
-      'sidebarLinks' => [
-        ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/admin'],
-        ['key' => 'users',     'label' => 'Users',     'icon' => '👥', 'href' => '/admin/users'],
-        ['key' => 'settings',  'label' => 'Settings',  'icon' => '⚙️', 'href' => '/admin/settings'],
-      ],
-
-      'active' => 'dashboard',
-
-      'accountMenu' => [
-        ['label' => 'Profile', 'href' => '/admin/profile'],
-        ['label' => 'Logout',  'href' => '/auth/logout', 'class' => 'menu-logout'],
-      ],
-    ];
-
-    $this->view('admin/index', $data);
+    if (!Auth::check() || Auth::role() !== 'admin') {
+      header("Location: {$this->base}/auth/signin");
+      exit;
+    }
   }
 
-  /**
-   * User Management
-   * Route: /admin/users
-   */
-  public function users()
+  /* ================= DASHBOARD ================= */
+  public function index(): void
   {
-    $data = [
-      'pageTitle'    => 'Users',
-      'pageSubtitle' => 'Manage platform users',
-
-      'userName'  => 'Admin',
-      'userEmail' => 'admin@finance.com',
-
-      'sidebarLinks' => [
-        ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/admin'],
-        ['key' => 'users',     'label' => 'Users',     'icon' => '👥', 'href' => '/admin/users'],
-        ['key' => 'settings',  'label' => 'Settings',  'icon' => '⚙️', 'href' => '/admin/settings'],
-      ],
-
-      'active' => 'users',
-
-      'accountMenu' => [
-        ['label' => 'Profile', 'href' => '/admin/profile'],
-        ['label' => 'Logout',  'href' => '/auth/logout', 'class' => 'menu-logout'],
-      ],
-    ];
-
-    $this->view('admin/users', $data);
+    $this->guard();
+    require __DIR__ . '/../Views/admin/index.php';
   }
 
-  /**
-   * Admin Settings
-   * Route: /admin/settings
-   */
-  public function settings()
+  /* ================= USERS LIST ================= */
+  public function users(): void
   {
-    $data = [
-      'pageTitle'    => 'Settings',
-      'pageSubtitle' => 'System configuration',
+    $this->guard();
+    require __DIR__ . '/../Views/admin/users.php';
+  }
 
-      'userName'  => 'Admin',
-      'userEmail' => 'admin@finance.com',
+  /* ================= SETTINGS ================= */
+  public function settings(): void
+  {
+    $this->guard();
+    require __DIR__ . '/../Views/admin/settings.php';
+  }
 
-      'sidebarLinks' => [
-        ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => '/admin'],
-        ['key' => 'users',     'label' => 'Users',     'icon' => '👥', 'href' => '/admin/users'],
-        ['key' => 'settings',  'label' => 'Settings',  'icon' => '⚙️', 'href' => '/admin/settings'],
-      ],
+  /* ================= VIEW USER ================= */
+  public function viewUser(): void
+  {
+    $this->guard();
 
-      'active' => 'settings',
+    $userId = (int)($_GET['id'] ?? 0);
+    if (!$userId) {
+      header("Location: {$this->base}/admin/users");
+      exit;
+    }
 
-      'accountMenu' => [
-        ['label' => 'Profile', 'href' => '/admin/profile'],
-        ['label' => 'Logout',  'href' => '/auth/logout', 'class' => 'menu-logout'],
-      ],
-    ];
+    $user = User::findById($userId);
+    if (!$user) {
+      header("Location: {$this->base}/admin/users");
+      exit;
+    }
 
-    $this->view('admin/settings', $data);
+    $profile   = Profile::get($user['id'], $user['role']);
+    $documents = Document::byUser($user['id']);
+
+    require __DIR__ . '/../Views/admin/view-user.php';
+  }
+
+  /* ================= EDIT USER ================= */
+  public function editUser(): void
+  {
+    $this->guard();
+
+    $userId = (int)($_GET['id'] ?? 0);
+    if (!$userId) {
+      header("Location: {$this->base}/admin/users");
+      exit;
+    }
+
+    $user = User::findById($userId);
+    if (!$user) {
+      header("Location: {$this->base}/admin/users");
+      exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      User::updateName(
+        $userId,
+        $_POST['first_name'] ?? '',
+        $_POST['last_name'] ?? ''
+      );
+
+      if (!empty($_POST['status'])) {
+        User::updateStatus($userId, $_POST['status']);
+      }
+
+      $_SESSION['success'] = 'User updated successfully.';
+      header("Location: {$this->base}/admin/users");
+      exit;
+    }
+
+    require __DIR__ . '/../Views/admin/edit-user.php';
+  }
+
+  /* ================= USER ACTIONS ================= */
+  public function action(): void
+  {
+    $this->guard();
+
+    $userId = (int)($_POST['user_id'] ?? 0);
+    $action = $_POST['action'] ?? '';
+
+    if (!$userId) {
+      http_response_code(400);
+      exit('Invalid user');
+    }
+
+    switch ($action) {
+      case 'suspend':
+        User::updateStatus($userId, 'suspended');
+        break;
+
+      case 'unsuspend':
+        User::updateStatus($userId, 'pending');
+        break;
+
+
+
+      default:
+        http_response_code(400);
+        exit('Invalid action');
+    }
+
+    echo json_encode(['success' => true]);
   }
 }

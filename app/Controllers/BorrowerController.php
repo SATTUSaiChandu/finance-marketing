@@ -18,6 +18,15 @@ class BorrowerController
       exit;
     }
   }
+  // private function requireVerified(): void
+  // {
+  //   if (Auth::user()['status'] !== 'verified') {
+  //     $_SESSION['error'] = 'Your account must be verified to access this feature.';
+  //     header("Location: {$this->base}/financier/dashboard");
+  //     exit;
+  //   }
+  // }
+
 
   /* ================= PROFILE + DOCUMENT GUARD ================= */
   private function requireCompletedProfile(): void
@@ -54,6 +63,11 @@ class BorrowerController
     $overallCompletion = round(
       ($profileCompletion * 0.6) + ($documentCompletion * 0.4)
     );
+    $canApplyLoan = (
+      Profile::isComplete($user['id'], 'borrower')
+      && Document::isComplete($user['id'], 'borrower')
+    );
+
 
     require __DIR__ . '/../Views/borrower/dashboard.php';
   }
@@ -79,7 +93,7 @@ class BorrowerController
         'description'       => $_POST['description'] ?? null,
       ]);
 
-      header("Location: {$this->base}/borrower/applications");
+      header("Location: {$this->base}/borrower/my-applications");
       exit;
     }
 
@@ -92,13 +106,48 @@ class BorrowerController
   {
     $this->guard();
 
-    $sessionUser  = Auth::user();
-    $user         = User::findById($sessionUser['id']); // ✅ FIX
+    $sessionUser = Auth::user();
+    $user        = User::findById($sessionUser['id']);
+
     $applications = LoanRequest::byBorrower($user['id']);
     $stats        = LoanRequest::statsForBorrower($user['id']);
 
+    // ✅ ADD THESE TWO LINES (THIS IS THE FIX)
+    $profileCompletion  = Profile::completion($user['id'], 'borrower');
+    $documentCompletion = Document::completion($user['id'], 'borrower');
+
+    $overallCompletion = round(
+      ($profileCompletion * 0.6) + ($documentCompletion * 0.4)
+    );
+
+    // ✅ SINGLE SOURCE OF TRUTH
+    $canApplyLoan = (
+      Profile::isComplete($user['id'], 'borrower')
+      && Document::isComplete($user['id'], 'borrower')
+    );
+
+
     require __DIR__ . '/../Views/borrower/my-applications.php';
   }
+  // Delete Application
+  public function deleteApplication(): void
+  {
+    $this->guard();
+
+    $sessionUser = Auth::user();
+    $loanId = (int)($_GET['id'] ?? 0);
+
+    if ($loanId <= 0) {
+      header("Location: {$this->base}/borrower/my-applications");
+      exit;
+    }
+
+    LoanRequest::deleteIfNoMatch($loanId, $sessionUser['id']);
+
+    header("Location: {$this->base}/borrower/my-applications");
+    exit;
+  }
+
 
   /* ================= LOANS ================= */
   public function loans(): void
@@ -212,8 +261,9 @@ class BorrowerController
       null,
       $_POST['doc_type'],
       ucfirst($_POST['doc_type']) . ' Proof',
-      "/uploads/{$user['id']}/{$name}"
+      "/finance-marketing/public/uploads/{$user['id']}/{$name}"
     );
+
 
     $_SESSION['success'] = 'Document uploaded successfully';
     header("Location: {$this->base}/borrower/profile?tab=documents");

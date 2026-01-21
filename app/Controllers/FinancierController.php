@@ -2,6 +2,7 @@
 
 require_once 'BaseController.php';
 require_once __DIR__ . '/../Core/Auth.php';
+
 require_once __DIR__ . '/../Models/User.php';
 require_once __DIR__ . '/../Models/Profile.php';
 require_once __DIR__ . '/../Models/Document.php';
@@ -14,13 +15,6 @@ class FinancierController extends BaseController
 {
   private string $base = '/finance-marketing/public';
 
-  /* ================= REDIRECT ROOT ================= */
-  public function index(): void
-  {
-    header("Location: {$this->base}/financier/dashboard");
-    exit;
-  }
-
   /* ================= AUTH GUARD ================= */
   private function guard(): void
   {
@@ -30,16 +24,25 @@ class FinancierController extends BaseController
     }
   }
 
+
+
+  /* ================= ROOT ================= */
+  public function index(): void
+  {
+    $this->guard();
+    header("Location: {$this->base}/financier/dashboard");
+    exit;
+  }
+
   /* ================= DASHBOARD ================= */
   public function dashboard(): void
   {
     $this->guard();
 
-    $sessionUser = Auth::user();
-    $user = User::findById($sessionUser['id']);
+    $user = User::findById(Auth::user()['id']);
 
     $stats = Financier::dashboardStats($user['id']);
-    $recentApplications = Financier::recentApplications(5);
+    $recentApplications = LoanRequest::recentVerified(5);
 
     require __DIR__ . '/../Views/financier/index.php';
   }
@@ -49,7 +52,9 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
-    $applications = LoanRequest::verified();
+
+    $applications = LoanRequest::openVerifiedBorrowers();
+
     require __DIR__ . '/../Views/financier/applications.php';
   }
 
@@ -58,9 +63,7 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
-    $user = User::findById(Auth::user()['id']);
-    $wishlist = Wishlist::all($user['id']);
-
+    $wishlist = Wishlist::all(Auth::user()['id']);
     require __DIR__ . '/../Views/financier/wishlist.php';
   }
 
@@ -68,7 +71,9 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
+
     Wishlist::add(Auth::user()['id'], (int)$_POST['loan_request_id']);
+
     header("Location: {$this->base}/financier/applications");
     exit;
   }
@@ -77,7 +82,9 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
+
     Wishlist::remove(Auth::user()['id'], (int)$_POST['loan_request_id']);
+
     header("Location: {$this->base}/financier/wishlist");
     exit;
   }
@@ -87,8 +94,13 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
-    Investment::create(Auth::user()['id'], (int)$_POST['loan_request_id']);
-    $_SESSION['success'] = 'Investment request sent.';
+
+    Investment::create(
+      Auth::user()['id'],
+      (int)$_POST['loan_request_id']
+    );
+
+    $_SESSION['success'] = 'Investment successful.';
     header("Location: {$this->base}/financier/investments");
     exit;
   }
@@ -98,8 +110,8 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
-    $user = User::findById(Auth::user()['id']);
-    $investments = Investment::byFinancier($user['id']);
+
+    $investments = Investment::byFinancier(Auth::user()['id']);
 
     require __DIR__ . '/../Views/financier/investments.php';
   }
@@ -109,9 +121,8 @@ class FinancierController extends BaseController
   {
     $this->guard();
 
-    $sessionUser = Auth::user();
-    $user = User::findById($sessionUser['id']); // ✅ DB USER
-    $role = 'financier'; // ✅ CORRECT ROLE
+    $user = User::findById(Auth::user()['id']);
+    $role = 'financier';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -137,17 +148,19 @@ class FinancierController extends BaseController
         exit;
       }
 
-      // Save name
       User::updateName(
         $user['id'],
         $_POST['first_name'] ?? '',
         $_POST['last_name'] ?? ''
       );
 
-      // Save profile
       Profile::save($user['id'], $role, $_POST);
 
-      $_SESSION['success'] = 'Profile updated successfully.';
+      if ($user['status'] === 'pending') {
+        User::updateStatus($user['id'], 'under_review');
+      }
+
+      $_SESSION['success'] = 'Profile submitted for verification.';
       header("Location: {$this->base}/financier/profile");
       exit;
     }
@@ -158,7 +171,6 @@ class FinancierController extends BaseController
     require __DIR__ . '/../Views/financier/profile.php';
   }
 
-
   /* ================= DOCUMENT UPLOAD ================= */
   public function uploadDocument(): void
   {
@@ -168,13 +180,15 @@ class FinancierController extends BaseController
 
     $ext = strtolower(pathinfo($_FILES['document']['name'], PATHINFO_EXTENSION));
     if (!in_array($ext, ['pdf', 'jpg', 'jpeg', 'png'], true)) {
-      $_SESSION['error'] = 'Invalid file type';
+      $_SESSION['error'] = 'Invalid file type.';
       header("Location: {$this->base}/financier/profile?tab=documents");
       exit;
     }
 
     $dir = __DIR__ . '/../../public/uploads/' . $user['id'];
-    if (!is_dir($dir)) mkdir($dir, 0777, true);
+    if (!is_dir($dir)) {
+      mkdir($dir, 0777, true);
+    }
 
     $name = uniqid('doc_', true) . '.' . $ext;
     move_uploaded_file($_FILES['document']['tmp_name'], "{$dir}/{$name}");
@@ -187,7 +201,8 @@ class FinancierController extends BaseController
       "/uploads/{$user['id']}/{$name}"
     );
 
-    $_SESSION['success'] = 'Document uploaded successfully';
+
+    $_SESSION['success'] = 'Document uploaded successfully.';
     header("Location: {$this->base}/financier/profile?tab=documents");
     exit;
   }

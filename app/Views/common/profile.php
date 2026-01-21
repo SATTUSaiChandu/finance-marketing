@@ -180,6 +180,13 @@ if (!in_array($activeTab, $allowedTabs, true)) {
 
     <div class="documents-grid">
       <?php
+
+      $uploadedDocs = [];
+      foreach ($documents as $doc) {
+        $uploadedDocs[$doc['doc_type']] = $doc;
+      }
+
+
       $docs = [
         'identity' => 'Identity Proof',
         'address'  => 'Address Proof',
@@ -190,18 +197,36 @@ if (!in_array($activeTab, $allowedTabs, true)) {
 
       foreach ($docs as $type => $label):
       ?>
-        <form method="POST"
-          enctype="multipart/form-data"
-          action="<?= $uploadAction ?>"
-          class="doc-card">
-
+        <div class="doc-card">
           <div class="doc-title"><?= htmlspecialchars($label) ?></div>
 
-          <input type="hidden" name="doc_type" value="<?= $type ?>">
-          <input type="file" name="document" required>
+          <?php if (isset($uploadedDocs[$type])): ?>
+            <!-- ✅ DOCUMENT ALREADY UPLOADED -->
+            <div class="doc-status success">
+              ✔ Uploaded
+            </div>
 
-          <button type="submit" class="btn-upload">Upload ↑</button>
-        </form>
+            <a
+              href="<?= htmlspecialchars($uploadedDocs[$type]['file_path']) ?>"
+              target="_blank"
+              class="doc-view-link">
+              View document
+            </a>
+
+          <?php else: ?>
+            <!-- ⬆️ UPLOAD FORM -->
+            <form method="POST"
+              enctype="multipart/form-data"
+              action="<?= $uploadAction ?>">
+
+              <input type="hidden" name="doc_type" value="<?= $type ?>">
+              <input type="file" name="document" required>
+
+              <button type="submit" class="btn-upload">Upload ↑</button>
+            </form>
+          <?php endif; ?>
+        </div>
+
       <?php endforeach; ?>
     </div>
 
