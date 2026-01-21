@@ -42,12 +42,14 @@ $router->get('admin/user/view', 'AdminController@viewUser');
 $router->get('admin/user/edit', 'AdminController@editUser');
 
 /* ================= AGENT ================= */
-$router->get('agent', 'AgentController@index');
-$router->get('agent/history', 'AgentController@history');
+$router->get('/agent', 'AgentController@index');
+$router->get('/agent/view', 'AgentController@viewUser');
+$router->post('/agent/verify', 'AgentController@verify');
+
 
 /* ================= BORROWER ================= */
 $router->get('borrower', 'BorrowerController@dashboard');
-
+$router->get('/borrower/my-application/delete', 'BorrowerController@deleteApplication');
 $router->get('borrower/apply-loan', 'BorrowerController@applyLoan');
 $router->post('borrower/apply-loan', 'BorrowerController@applyLoan');
 

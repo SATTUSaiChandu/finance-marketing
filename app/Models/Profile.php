@@ -98,17 +98,23 @@ class Profile
       return 0;
     }
 
-    $requiredFields = self::requiredFields($role);
+    $required = ['phone', 'address', 'city', 'state', 'zip'];
+
     $filled = 0;
 
-    foreach ($requiredFields as $field) {
-      if (!empty($profile[$field])) {
+    foreach ($required as $field) {
+      if (
+        isset($profile[$field]) &&
+        trim((string)$profile[$field]) !== '' &&
+        $profile[$field] !== 'Sélectionnez un pays'
+      ) {
         $filled++;
       }
     }
 
-    return (int) round(($filled / count($requiredFields)) * 100);
+    return (int) round(($filled / count($required)) * 100);
   }
+
 
   /**
    * Required fields per role

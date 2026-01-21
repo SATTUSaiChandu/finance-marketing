@@ -17,8 +17,7 @@ $active = 'dashboard';
 
 // KPI data
 $kpis = [
-  ['label' => 'Active Applications', 'value' => $stats['total'] ?? 0, 'icon' => '📄'],
-  ['label' => 'Pending Review', 'value' => $stats['pending'] ?? 0, 'icon' => '⏳'],
+  ['label' => 'Open Applications', 'value' => $stats['open'] ?? 0, 'icon' => '📄'],
   ['label' => 'Approved Loans', 'value' => $stats['approved'] ?? 0, 'icon' => '✅'],
   [
     'label' => 'Total Borrowed',
@@ -26,6 +25,7 @@ $kpis = [
     'icon' => '💵'
   ],
 ];
+
 
 // Account menu
 $accountMenu = [
@@ -68,24 +68,22 @@ $accountMenu = [
               style="width: <?= (int)$overallCompletion ?>%;">
             </div>
           </div>
-
-
         </div>
 
         <p class="muted" style="margin-top:8px;">
           <?= (int)$overallCompletion ?>% completed
-          <?php if ($overallCompletion < 100): ?>
+          <?php if (!$canApplyLoan): ?>
             · Complete your profile & documents to apply for loans
           <?php endif; ?>
         </p>
 
-        <?php if ($overallCompletion < 100): ?>
-          <a class="btn-disabled" title="Complete your profile to apply">
-            Complete profile to apply
-          </a>
-        <?php else: ?>
+        <?php if ($canApplyLoan): ?>
           <a href="/finance-marketing/public/borrower/apply-loan" class="btn-primary">
             + New Application
+          </a>
+        <?php else: ?>
+          <a href="/finance-marketing/public/borrower/profile" class="btn-disabled">
+            Complete profile to apply
           </a>
         <?php endif; ?>
 
@@ -98,15 +96,14 @@ $accountMenu = [
           <p>Track your loan applications and repayments in one place.</p>
         </div>
 
-        <!-- 🔹 APPLY LOAN CTA WITH GUARD -->
-        <?php if ($overallCompletion === 100): ?>
+        <?php if ($canApplyLoan): ?>
           <a href="/finance-marketing/public/borrower/apply-loan" class="btn-primary">
             + New Application
           </a>
         <?php else: ?>
-          <button class="btn-primary" disabled title="Complete profile first">
+          <a href="/finance-marketing/public/borrower/profile" class="btn-primary">
             Complete profile to apply
-          </button>
+          </a>
         <?php endif; ?>
       </section>
 
@@ -117,9 +114,16 @@ $accountMenu = [
       <section class="section-card">
         <div class="section-header">
           <h3>My Applications</h3>
-          <a href="/finance-marketing/public/borrower/my-applications" class="link-arrow">
-            View All →
-          </a>
+
+          <?php if ($canApplyLoan): ?>
+            <a href="/finance-marketing/public/borrower/apply-loan" class="link-arrow">
+              + New Application →
+            </a>
+          <?php else: ?>
+            <a href="/finance-marketing/public/borrower/profile" class="link-arrow">
+              Complete profile →
+            </a>
+          <?php endif; ?>
         </div>
 
         <table class="data-table">
@@ -164,7 +168,11 @@ $accountMenu = [
             <?php else: ?>
               <tr>
                 <td colspan="4" class="muted" style="text-align:center;padding:20px;">
-                  No applications yet. Start by completing your profile.
+                  <?php if ($canApplyLoan): ?>
+                    No applications yet. You can apply for a loan now.
+                  <?php else: ?>
+                    No applications yet. Start by completing your profile.
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endif; ?>

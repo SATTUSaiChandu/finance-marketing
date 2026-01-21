@@ -28,15 +28,14 @@ $kpis = [
 
 // ================= Status → Badge =================
 $statusBadge = [
-  'pending'  => 'badge badge-amber',
-  'verified' => 'badge badge-blue',
+  'open'     => 'badge badge-amber',
   'approved' => 'badge badge-green',
-  'rejected' => 'badge badge-red',
 ];
 
-// ================= Profile Completion =================
-$overallCompletion = $overallCompletion ?? 0;
-$canApply = $overallCompletion === 100;
+
+
+// ================= APPLY GUARD =================
+
 ?>
 
 <!doctype html>
@@ -77,16 +76,16 @@ $canApply = $overallCompletion === 100;
               <option>All Status</option>
             </select>
 
-            <?php if ($canApply): ?>
+            <?php if ($canApplyLoan): ?>
               <a href="/finance-marketing/public/borrower/apply-loan" class="btn-primary">
                 + New Application
               </a>
             <?php else: ?>
-              <a href="/finance-marketing/public/borrower/profile" class="btn-disabled"
-                title="Complete your profile to apply">
+              <a href="/finance-marketing/public/borrower/profile" class="btn-primary">
                 Complete profile to apply
               </a>
             <?php endif; ?>
+
           </div>
         </div>
 
@@ -132,8 +131,8 @@ $canApply = $overallCompletion === 100;
                   <td><?= date('Y-m-d', strtotime($app['created_at'])) ?></td>
 
                   <td>
-                    <?php if ($status === 'pending'): ?>
-                      <a href="/finance-marketing/public/borrower/application/delete?id=<?= (int)$app['id'] ?>"
+                    <?php if ($status === 'open'): ?>
+                      <a href="/finance-marketing/public/borrower/my-application/delete?id=<?= (int)$app['id'] ?>"
                         class="link-view"
                         onclick="return confirm('Delete this application?')">
                         delete
@@ -147,7 +146,11 @@ $canApply = $overallCompletion === 100;
             <?php else: ?>
               <tr>
                 <td colspan="7" class="muted" style="text-align:center;padding:20px;">
-                  No applications yet. Start by applying for a loan.
+                  <?php if ($canApplyLoan): ?>
+                    No applications yet. You can apply for a loan now.
+                  <?php else: ?>
+                    No applications yet. Complete your profile to apply.
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endif; ?>

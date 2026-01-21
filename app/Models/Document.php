@@ -11,19 +11,19 @@ class Document
   {
     if ($role === 'borrower') {
       return [
-        'identity_proof',
-        'address_proof',
-        'income_proof',
-        'bank_statement'
+        'identity',
+        'address',
+        'income',
+        'bank',
+        'tax'
       ];
     }
 
     if ($role === 'financier') {
       return [
-        'identity_proof',
-        'company_registration',
-        'bank_statement',
-        'tax_declaration'
+        'identity',
+        'bank',
+        'tax'
       ];
     }
 
@@ -136,11 +136,30 @@ class Document
    */
   public static function isComplete(int $userId, string $role): bool
   {
-    foreach (self::requiredForRole($role) as $docType) {
-      if (!self::hasDocument($userId, $docType)) {
+    $required = self::requiredForRole($role);
+
+    if (empty($required)) {
+      return true;
+    }
+
+    $db = Database::get();
+
+    $stmt = $db->prepare("
+        SELECT doc_type
+        FROM documents
+        WHERE user_id = ?
+        GROUP BY doc_type
+    ");
+
+    $stmt->execute([$userId]);
+    $uploaded = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    foreach ($required as $type) {
+      if (!in_array($type, $uploaded, true)) {
         return false;
       }
     }
+
     return true;
   }
 }

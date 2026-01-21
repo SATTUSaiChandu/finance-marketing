@@ -379,3 +379,21 @@ ALTER TABLE terms_conditions
 ADD COLUMN admin_id INT,
 ADD CONSTRAINT fk_terms_admin
 FOREIGN KEY (admin_id) REFERENCES users(id);
+
+
+UPDATE documents
+SET file_path = REPLACE(file_path, '/finance-marketing/public', '')
+WHERE file_path LIKE '/finance-marketing/public/uploads/%';
+
+
+UPDATE documents
+SET file_path = CONCAT('/finance-marketing/public', file_path)
+WHERE file_path LIKE '/uploads/%';
+
+
+
+ALTER TABLE loan_requests
+ADD COLUMN purpose VARCHAR(255) AFTER term;
+
+ALTER TABLE loan_requests
+MODIFY status ENUM('open','approved') NOT NULL DEFAULT 'open';

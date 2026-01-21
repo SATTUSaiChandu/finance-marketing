@@ -49,9 +49,10 @@ class User
         password_hash,
         dob,
         pin_hash,
-        role
+        role,
+        status
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
     ");
 
     return $stmt->execute([
@@ -77,6 +78,20 @@ class User
     ");
 
     return $stmt->execute([$first, $last, $userId]);
+  }
+
+  /* ================= UPDATE STATUS (✅ ADDED) ================= */
+  public static function updateStatus(int $userId, string $status): bool
+  {
+    $db = Database::get();
+
+    $stmt = $db->prepare("
+      UPDATE users
+      SET status = ?
+      WHERE id = ?
+    ");
+
+    return $stmt->execute([$status, $userId]);
   }
 
   /* ================= PASSWORD RESET ================= */
